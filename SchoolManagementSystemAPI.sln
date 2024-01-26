@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{03079080-A708-4B4C-9AF6-5590F075A677}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{01C9FD56-4DFE-4E7B-B5A6-FB08BA4540C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{57D970FF-6805-4B19-AE24-9F1D9BDC19B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.AuthAPI", "SchoolManagementSystemAPI.Services.AuthAPI\SchoolManagementSystemAPI.Services.AuthAPI.csproj", "{09D89F90-08DE-46A4-8ABA-AB487835CDB9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.Student", "SchoolManagementSystemAPI.Services.Student\SchoolManagementSystemAPI.Services.Student.csproj", "{A1CEFBBF-2543-4699-883D-89F819D391E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.Teacher", "SchoolManagementSystemAPI.Services.Teacher\SchoolManagementSystemAPI.Services.Teacher.csproj", "{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.Parent", "SchoolManagementSystemAPI.Services.Parent\SchoolManagementSystemAPI.Services.Parent.csproj", "{23E7E981-C52B-4A6A-A2DD-40309D38312B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.SchoolUtils", "SchoolManagementSystemAPI.Services.Subject\SchoolManagementSystemAPI.Services.SchoolUtils.csproj", "{F547D4CE-919A-4609-9FDF-2C606304F1EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRepository", "GenericRepository\GenericRepository.csproj", "{6D466205-CD77-4972-81AF-7AE1209BDB55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystem.Integrations.MessageBus", "SchoolManagementSystem.Integrations.MessageBus\SchoolManagementSystem.Integrations.MessageBus.csproj", "{58BE770D-1536-4D79-8918-3FFCD32208BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09D89F90-08DE-46A4-8ABA-AB487835CDB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D89F90-08DE-46A4-8ABA-AB487835CDB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D89F90-08DE-46A4-8ABA-AB487835CDB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D89F90-08DE-46A4-8ABA-AB487835CDB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CEFBBF-2543-4699-883D-89F819D391E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CEFBBF-2543-4699-883D-89F819D391E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CEFBBF-2543-4699-883D-89F819D391E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CEFBBF-2543-4699-883D-89F819D391E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{09D89F90-08DE-46A4-8ABA-AB487835CDB9} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{A1CEFBBF-2543-4699-883D-89F819D391E9} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{23E7E981-C52B-4A6A-A2DD-40309D38312B} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{F547D4CE-919A-4609-9FDF-2C606304F1EC} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{6D466205-CD77-4972-81AF-7AE1209BDB55} = {57D970FF-6805-4B19-AE24-9F1D9BDC19B8}
+		{58BE770D-1536-4D79-8918-3FFCD32208BF} = {57D970FF-6805-4B19-AE24-9F1D9BDC19B8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77EBA48B-C328-4AF8-8ABC-BEFD7368BA55}
+	EndGlobalSection
+EndGlobal
