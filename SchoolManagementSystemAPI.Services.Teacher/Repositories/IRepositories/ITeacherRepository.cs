@@ -1,4 +1,5 @@
-﻿using GenericRepository;
+﻿//using GenericRepository;
+using GenericRepository;
 using SchoolManagementSystemAPI.Services.Teacher.Repositories.Data;
 
 namespace SchoolManagementSystemAPI.Services.Teacher.Repositories.IRepositories

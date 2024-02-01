@@ -11,6 +11,8 @@ using SchoolManagementSystemAPI.Services.AuthAPI.Services;
 using SchoolManagementSystemAPI.Services.AuthAPI.Services.IServices;
 using Hangfire;
 using SchoolManagementSystemAPI.Services.AuthAPI.Services.HangFireServiceManagement;
+using SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ;
+using SchoolManagementSystemAPI.Services.AuthAPI.Utils.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,13 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSett
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService<RegisterRequestDTO>, AuthService<RegisterRequestDTO>>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
+var dbOption = new DbContextOptionsBuilder<AppDbContext>();
+dbOption.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddSingleton(new UserDeleteService(dbOption.Options, mapper));
+builder.Services.AddHostedService<RabbitMQConsumer>();
+builder.Services.AddGrpc();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -64,5 +73,24 @@ RecurringJob.AddOrUpdate<IHangFireServiceManagement>(x => x.CheckSentMessageUpda
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGrpcService<GrpcApplicationUserService>();
+app.MapGet("/prorto/user.proto", async context =>
+{
+    context.Response.WriteAsync(File.ReadAllText("Protos/user.proto"));
+});
+Console.WriteLine($"------> db uri = {app.Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
+ApplyMigration();
 app.Run();
+
+void ApplyMigration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        if (_db.Database.GetPendingMigrations().Count() > 0)
+        {
+            _db.Database.Migrate();
+        }
+    }
+}

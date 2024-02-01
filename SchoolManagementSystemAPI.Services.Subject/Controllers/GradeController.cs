@@ -5,8 +5,9 @@ using SchoolManagementSystemAPI.Services.SchoolUtils.Services.IService;
 
 namespace SchoolManagementSystemAPI.Services.SchoolUtils.Controllers
 {
+    [ApiController]
     [Route("/api/stdclass")]
-    public class GradeController : Controller
+    public class GradeController : ControllerBase
     {
         private readonly IGradeService _service;
         private readonly ResponseDTO _response;

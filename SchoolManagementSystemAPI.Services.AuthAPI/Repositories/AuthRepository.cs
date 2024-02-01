@@ -87,7 +87,15 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
 
         public async Task<ApplicationUser> GetUserById(string id)
         {
-            var user = await _db.ApplicationUsers.FirstAsync(u => u.Id.ToLower() == id.ToLower());
+            var user = await _db.ApplicationUsers.FirstOrDefaultAsync(u => u.Id.ToLower() == id.ToLower());
+            if (user == null) return null;
+
+            return user;
+        }
+
+        public async Task<ApplicationUser> GetUserByUsername(string username)
+        {
+            var user = await _db.ApplicationUsers.FirstOrDefaultAsync(u => u.UserName.ToLower() == username.ToLower());
             if (user == null) return null;
 
             return user;
@@ -123,6 +131,11 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
             throw new BadHttpRequestException("Role already exist");
         }
 
+        public void Remove(ApplicationUser user)
+        {
+            _db.ApplicationUsers.Remove(user);
+            _db.SaveChanges();
+        }
     }
 }
 

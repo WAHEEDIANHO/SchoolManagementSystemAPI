@@ -18,6 +18,8 @@ namespace SchoolManagementSystemAPI.Services.Student
                 .ForMember(dest => dest.SessionId, u => u.MapFrom(src => src.SessionId))
                 .ForMember(dest => dest.ClassId, u => u.MapFrom(src => src.ClassId))
                 .ForMember(dest => dest.AdmissionNo, u => u.MapFrom(src => src.AdmissionNo));
+                config.CreateMap<UserResponseDTO, GrpcApplicationUserModel>().ReverseMap();
+
             });
 
             return mappingConfiguration;

@@ -6,8 +6,9 @@ using SchoolManagementSystemAPI.Services.AuthAPI.Services.IServices;
 
 namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
 {
-    [Route("api")]
-    public class RegistrationController : Controller
+    [ApiController]
+    [Route("api/user")]
+    public class RegistrationController : ControllerBase
     {
         private readonly IAuthService<RegisterRequestDTO> _service;
         private readonly ResponseDTO _response;
@@ -21,6 +22,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
         [HttpPost("register/teacher")]
         public async Task<ActionResult<ResponseDTO>> TeacherRegistration([FromForm] TeacherRegisterDTO registerRequest)
         {
+            Console.WriteLine("-------> Entering Teacher reg");
             registerRequest.Role = "TEACHER";
             try
             {
@@ -42,7 +44,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             catch (Exception ex)
             {
                 if (ex is BadHttpRequestException) { return BadRequest(ex.Message); }
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.ToString());
             }
         }
 
@@ -117,7 +119,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             }
         }
 
-        [HttpGet("user")]
+        [HttpGet]
         public ActionResult<IEnumerable<ResponseDTO>> GetUsersByRole()
         {
             try
@@ -128,7 +130,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
                
-        [HttpGet("user/by-role")]
+        [HttpGet("by-role")]
         public ActionResult<IEnumerable<ResponseDTO>> GetUsersByRole([FromQuery] string role)
         {
             try
@@ -139,7 +141,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             catch (Exception ex) { return StatusCode(500, ex.Message); }
         }
 
-        [HttpGet("user/{userId}")]
+        [HttpGet("{userId}")]
         public async Task<ActionResult<ResponseDTO>> GetUser(string userId)
         {
             try

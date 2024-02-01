@@ -5,7 +5,7 @@
 namespace SchoolManagementSystemAPI.Services.Parent.Migrations
 {
     /// <inheritdoc />
-    public partial class parent : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

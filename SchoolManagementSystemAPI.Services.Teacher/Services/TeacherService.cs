@@ -5,6 +5,7 @@ using SchoolManagementSystemAPI.Services.Teacher.Model.DTOs;
 using SchoolManagementSystemAPI.Services.Teacher.Repositories;
 using SchoolManagementSystemAPI.Services.Teacher.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Teacher.Services.IServices;
+using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService;
 
 namespace SchoolManagementSystemAPI.Services.Teacher.Services
 {
@@ -12,22 +13,29 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
     {
         private readonly ITeacherRepository _repo;
         private readonly IUserService _userService;
+        private readonly IGrpcApplicationUserClientService _grpcApplicationUser;
         private readonly IConfiguration _config;
         private IMapper _mapper;
 
-        public TeacherService(ITeacherRepository repo, IMapper mapper, IUserService userService, IConfiguration config)
+        public TeacherService(
+            ITeacherRepository repo, IMapper mapper, 
+            IUserService userService, 
+            IConfiguration config,
+            IGrpcApplicationUserClientService grpcApplicationUser
+            )
         {
             _repo = repo;
             _mapper = mapper;
             _config = config;
             _userService = userService;
+            _grpcApplicationUser = grpcApplicationUser;
         }
 
-        public async Task<bool> DeleteStudentById(string id)
+        public async Task<bool> DeleteTeacherById(string id)
         {
             try
             {
-                var res = await _repo.GetByKey(id);
+                var res = await _repo.GetTeacherById(id);
                 if (res != null)
                 {
                     _repo.Delete(res);
@@ -50,7 +58,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
                 IEnumerable<TeacherSchema> teacher = await _repo.GetAll();
                 if (!teacher.IsNullOrEmpty())
                 {
-                    IEnumerable<UserResponseDTO> users = await _userService.getUserByRole();
+                    IEnumerable<UserResponseDTO> users = _grpcApplicationUser.GetTeachers();
                     return  users.Join(teacher, x => x.Id.ToLower(), y => y.RegId.ToLower(), (x, y) => new TeacherDTO(x, y));
                 }else return Enumerable.Empty<TeacherDTO>();
 
@@ -61,14 +69,14 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
             }
         }
 
-        public async Task<TeacherDTO> GetStudentById(string id)
+        public async Task<TeacherDTO> GetTeacherById(string id)
         {
             try
             {
                 TeacherSchema st = await _repo.GetTeacherById(id);
                 if (st != null)
                 {
-                    UserResponseDTO user = await _userService.getUserById(id);
+                    UserResponseDTO user = _mapper.Map<UserResponseDTO>(_grpcApplicationUser.GetTeacherById(id)); ;
                     return new TeacherDTO(user, st);
                 }
                 else return new();
@@ -79,7 +87,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
             }
         }
 
-        public Task<bool> RegStudent(MsgRegTeacherDTO req)
+        public Task<bool> RegTeacher(MsgRegTeacherDTO req)
         {
             throw new NotImplementedException();
         }

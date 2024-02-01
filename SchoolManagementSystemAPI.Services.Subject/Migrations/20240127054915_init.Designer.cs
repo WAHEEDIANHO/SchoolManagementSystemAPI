@@ -12,8 +12,8 @@ using SchoolManagementSystemAPI.Services.SchoolUtils.Repositories.Data;
 namespace SchoolManagementSystemAPI.Services.SchoolUtils.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240125090323_updtae-Grade-Attr")]
-    partial class updtaeGradeAttr
+    [Migration("20240127054915_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,14 +30,13 @@ namespace SchoolManagementSystemAPI.Services.SchoolUtils.Migrations
                     b.Property<int>("GradeNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectTitle")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SubjectTeacher")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("GradeNumber", "SubjectId");
+                    b.HasKey("GradeNumber", "SubjectTitle");
 
                     b.ToTable("ClassSubjects");
                 });

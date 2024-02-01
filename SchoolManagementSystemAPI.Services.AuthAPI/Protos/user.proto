@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.AuthAPI"; //generate setup to the affore menetion name space when build
+
+
+service GrpcApplicationUser {
+    rpc GetUsersByRole (UserRole) returns (AppliactionUserResponse);
+    rpc GetUserById (UserId) returns (GrpcApplicationUserModel);
+}
+
+//message ----> data passing in and back from our servive
+message UserRole { string role = 1; }
+message UserId { string id = 1; }
+
+message GrpcApplicationUserModel {
+	  string Id = 1;
+      string Email = 2;
+      string UserName = 3;
+      string PhoneNumber = 4;
+      string LastName = 5;
+      string FirstName = 6;
+      string OtherName = 7;
+      string StateOfOrigin = 8;
+      string LocalGovArea  = 9;
+      string HomeAddress = 10;
+      string Role = 11;
+      string Gender = 12;
+      string DateofBirth = 13;
+      string BloodGroup = 14;
+      string Religion = 15;
+}
+
+message AppliactionUserResponse {
+    repeated GrpcApplicationUserModel users = 1;
+}
+

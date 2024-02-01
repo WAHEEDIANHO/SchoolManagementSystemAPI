@@ -16,8 +16,12 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI
                 config.CreateMap<ApplicationUser, ParentRegistrationDTO>().ReverseMap();
                 config.CreateMap<MsgRegStudentDTO, StudentRegisterDTO>().ReverseMap();
                 config.CreateMap<UserResponseDTO, ApplicationUser>().ReverseMap();
-            });
+                //config.CreateMap<UserResponseDTO, GrpcApplicationUserModel>().ReverseMap();
+                config.CreateMap<GrpcApplicationUserModel, ApplicationUser>().ReverseMap();
+            })
+            {
 
+            };
             return mappingConfiguration;
         }
     }

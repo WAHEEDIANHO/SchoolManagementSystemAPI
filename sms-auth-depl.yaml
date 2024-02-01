@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sms-auth-depl
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: sms-auth
+    template:
+        metadata:
+            labels:
+                app: sms-auth
+        spec:
+            containers:
+                - name: sms-auth
+                  image: docker.io/waheedianho/smsauth:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+    name: sms-auth-srv
+spec:
+    type: ClusterIP
+    selector:
+        app: sms-auth
+    ports:
+        - name: sms-auth
+          protocol: TCP
+          port: 80
+          targetPort: 80
+        - name: sms-auth-grpc
+          protocol: TCP
+          port: 888
+          targetPort: 888

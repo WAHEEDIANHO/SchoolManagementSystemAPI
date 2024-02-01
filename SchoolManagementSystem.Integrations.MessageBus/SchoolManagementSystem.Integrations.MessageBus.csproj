@@ -4,11 +4,14 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<PackageId>Waheedianho.MessageBusSender</PackageId>
+	<Version>1.0.1</Version>
+	<Author>Waheed</Author>
+	<Product>MessageBusSender</Product>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
   </ItemGroup>
-
 </Project>

@@ -5,8 +5,9 @@ using SchoolManagementSystemAPI.Services.SchoolUtils.Services.IService;
 
 namespace SchoolManagementSystemAPI.Services.SchoolUtils.Model
 {
+    [ApiController]
     [Route("/api/session")]
-    public class SessionController : Controller
+    public class SessionController : ControllerBase
     {
         private readonly ISessionService _service;
         private readonly ResponseDTO _response;

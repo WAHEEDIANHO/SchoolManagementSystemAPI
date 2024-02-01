@@ -6,7 +6,7 @@ using SchoolManagementSystemAPI.Services.AuthAPI.Services.IServices;
 
 namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
 {
-    [Route("api/auth")]
+    [Route("api/user")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -34,7 +34,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
                 return Ok(loginCredential);
             }catch (Exception ex)
             {
-                return StatusCode(500, ex.Message); 
+                return StatusCode(500, ex.ToString()); 
             }
         }
 

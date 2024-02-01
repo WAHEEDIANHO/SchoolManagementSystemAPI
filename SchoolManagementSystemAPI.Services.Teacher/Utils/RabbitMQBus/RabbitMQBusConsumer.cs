@@ -21,12 +21,16 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Utils.RabbitMQBus
 
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
-                UserName = "guest",
-                Password = "guest"
+                HostName = _config.GetValue<string>("RabbitmqConn:Host"),
+                UserName = _config.GetValue<string>("RabbitmqConn:Username"),
+                Password = _config.GetValue<string>("RabbitmqConn:Password"), //"pwQAxWoSgrrF30FS2y4nCeRAR52IwiVm",
+                VirtualHost = _config.GetValue<string>("RabbitmqConn:VirtualHost"),
+                AutomaticRecoveryEnabled =true,
+
             };
             
             string queueName = _config.GetValue<string>("ExchnageAndQueueName:TeacherRegQueue");
+            Console.WriteLine($"------>  Establishing conn at {_config.GetValue<string>("RabbitmqConn:Host")}");
             _conn = factory.CreateConnection();
             teacherRegChannel = _conn.CreateModel();
             teacherRegChannel.QueueDeclare(queueName, false, false, false, null);   
@@ -54,3 +58,4 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Utils.RabbitMQBus
         }
     }
 }
+ 

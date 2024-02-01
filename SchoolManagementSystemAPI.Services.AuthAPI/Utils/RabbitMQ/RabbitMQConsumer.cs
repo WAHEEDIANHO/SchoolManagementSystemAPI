@@ -1,6 +1,10 @@
 ﻿
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SchoolManagementSystemAPI.Services.AuthAPI.Model.DTOs;
+using SchoolManagementSystemAPI.Services.AuthAPI.Services;
+using System.Text;
 
 namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
 {
@@ -11,20 +15,28 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
         private readonly IModel teacherDelChannel;
         private readonly IModel parentDelChannel;
         private readonly IModel studentDelChannel;
+        private readonly UserDeleteService _service;
 
         private readonly string teacherQueueName;
         private readonly string parentQueueName;
         private readonly string studentQueueName;
 
-        public RabbitMQConsumer(IConfiguration configuration)
+        public RabbitMQConsumer(IConfiguration configuration, UserDeleteService service)
         {
             _configuration = configuration;
+            _service = service;
 
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
+                /*HostName = "localhost",
                 UserName = "guest",
-                Password = "guest",
+                Password = "guest",*/
+
+                HostName = "fly.rmq.cloudamqp.com",
+                UserName = "upjljwqx",
+                Password = "pwQAxWoSgrrF30FS2y4nCeRAR52IwiVm",
+                VirtualHost = "upjljwqx",
+                AutomaticRecoveryEnabled = true,
             };
             _conn = factory.CreateConnection();
            
@@ -69,17 +81,29 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
 
         private void StudentConsumerReceived(object? sender, BasicDeliverEventArgs e)
         {
-            throw new NotImplementedException();
+            var context = Encoding.UTF8.GetString(e.Body.ToArray());
+            MsgRegStudentDTO stuReg = JsonConvert .DeserializeObject<MsgRegStudentDTO>(context);
+            _service.DelUser(stuReg);
+
+            studentDelChannel.BasicAck(e.DeliveryTag, false);
         }
 
         private void ParentConSumerReceived(object? sender, BasicDeliverEventArgs e)
         {
-            throw new NotImplementedException();
+            var context = Encoding.UTF8.GetString(e.Body.ToArray());
+            MsgRegParentDTO parentReg = JsonConvert.DeserializeObject<MsgRegParentDTO>(context);
+             _service.DelUser(parentReg);
+
+           parentDelChannel.BasicAck(e.DeliveryTag, false);
         }
 
         private void TeacherConsumerReceived(object? sender, BasicDeliverEventArgs e)
         {
-            throw new NotImplementedException();
+            var context = Encoding.UTF8.GetString(e.Body.ToArray());
+            MsgRegTeacherDTO teacherMsg = JsonConvert.DeserializeObject<MsgRegTeacherDTO>(context);
+            _service.DelUser(teacherMsg);
+
+            teacherDelChannel.BasicAck(e.DeliveryTag, false);
         }
     }
 }

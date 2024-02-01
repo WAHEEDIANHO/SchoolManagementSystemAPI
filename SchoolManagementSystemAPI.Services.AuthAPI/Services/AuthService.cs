@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using SchoolManagementSystem.Integrations.MessageBus;
 using SchoolManagementSystemAPI.Services.AuthAPI.Model.DTOs;
 using SchoolManagementSystemAPI.Services.AuthAPI.Repositories;
@@ -14,6 +15,10 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
         //private readonly ILogger _logger;
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+        private readonly string? hostname;
+        private readonly string? userName;
+        private readonly string? passWord;
+        private readonly string? vHost;
 
         public AuthService(IAuthRepository authRepository, IJwtTokenGenerator jwtTokenGenerator, IConfiguration config, IMapper mapper)
         {
@@ -22,6 +27,11 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
            // _logger = logger;
             _config = config;
             _mapper = mapper;
+
+            hostname = _config.GetValue<string>("RabbitmqConn:Host");
+            userName = _config.GetValue<string>("RabbitmqConn:Username");
+            passWord = _config.GetValue<string>("RabbitmqConn:Password");
+            vHost = _config.GetValue<string>("RabbitmqConn:VirtualHost");
         }
        
 
@@ -29,11 +39,11 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
         {
             try
             {
-                var user = await _authRepository.GetUserById(requestDTO.username);
+                var user = await _authRepository.GetUserByUsername(requestDTO.username);
                 bool isValid = await _authRepository.CheckPassword(user, requestDTO.password);
 
                 if (user == null || !isValid)
-                {
+                {       
                     return new LoginResponseDTO() { user = new(), token = "" };
                 }
 
@@ -57,7 +67,8 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
 
         public async Task<bool> Register(T registerRequestDTO)
         {
-           try
+            
+            try
             {
                 bool isRegister = await _authRepository.RegisterUser((RegisterRequestDTO) registerRequestDTO);
                 bool isRoleAssign = await _authRepository.AssignRole((RegisterRequestDTO) registerRequestDTO);
@@ -73,7 +84,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                             StudentRegisterDTO student = (StudentRegisterDTO)(RegisterRequestDTO) registerRequestDTO;
                             //_logger.LogInformation("Brodcasting ur message STUDENT");
 
-                            user = await _authRepository.GetUserById(registerRequestDTO.Email);
+                            user = await _authRepository.GetUserByUsername(registerRequestDTO.Email);
                             MsgRegStudentDTO msgStudentReg = new()
                             {
                                 AdmissionNo = "",
@@ -81,7 +92,8 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                                 SessionId = student.SessionId,
                                 RegId = user.Id
                             };
-                            message = new RMQMessageBus();
+                            Console.WriteLine($"--------> Hostname {hostname}");
+                            message = new RMQMessageBus(hostname, userName, passWord, vHost);
                             message.SendMessage(msgStudentReg, _config.GetValue<string>("ExchnageAndQueueName:StudentRegQueue"), null);
                            
                             // student creation goes here
@@ -91,7 +103,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                             TeacherRegisterDTO teacher = (TeacherRegisterDTO)(RegisterRequestDTO)registerRequestDTO;
                             //Console.WriteLine("Brodcasting ur message TEACHER");
 
-                            user = await _authRepository.GetUserById(registerRequestDTO.Email);
+                            user = await _authRepository.GetUserByUsername(registerRequestDTO.Email);
                             MsgRegTeacherDTO msgRegTeacher = new()
                             {
                                 AppointmentDate = teacher.AppointmentDate,
@@ -100,7 +112,9 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                                 LevelOfStudy = teacher.LevelOfStudy,
                                 RegId = user.Id,
                             };
-                            message = new RMQMessageBus();
+                            //message = new RMQMessageBus("rabbitmq-sms-srv", "guest", "guest", "/");
+                            message = new RMQMessageBus(hostname, userName, passWord, vHost);
+                            Console.WriteLine("------> Conn set successfully about to send the meassage");
                             message.SendMessage(msgRegTeacher, _config.GetValue<string>("ExchnageAndQueueName:TeacherRegQueue"), null);
                             //teacers creation goes here
                             break;
@@ -126,7 +140,14 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
             }
             catch (Exception ex)
             {
-                throw;
+                if (ex is BadHttpRequestException && ex.Message.IndexOf("already taken") >= 0) throw;
+                try
+                {
+                    ApplicationUser user = await _authRepository.GetUserByUsername(registerRequestDTO.Email);
+                    _authRepository.Remove(user);
+                } catch (Exception e) { }
+
+               throw;
             }
         }
 
@@ -171,6 +192,20 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
             }
             catch (Exception ex) { throw; };
 
+        }
+
+        public async Task<bool> DelUser(String  id)
+        {
+            try
+            {
+                ApplicationUser user = await _authRepository.GetUserById(id);
+                _authRepository.Remove(user);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

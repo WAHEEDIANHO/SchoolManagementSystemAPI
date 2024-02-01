@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: teacherservice-depl
+spec:
+    replicas: 1
+    selector:
+        matchLabels: 
+            app: teacherservice
+    template:
+        metadata:
+            labels:
+                app: teacherservic
+        spec:
+            containers:
+            - name: teacherservice
+              image: docker.io/waheedianho/teacherservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+    name: teacherservice-srv
+spec:
+    type: ClusterIP
+    selector:
+        app: teacherservice
+    ports:
+        - name: teacherservice
+          protocol: TCP
+          port: 80
+          targetPort: 80
+
+
+         
+    
+    

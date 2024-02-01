@@ -6,6 +6,7 @@ using SchoolManagementSystemAPI.Services.Student.Model.DTOs;
 using SchoolManagementSystemAPI.Services.Student.Repositories;
 using SchoolManagementSystemAPI.Services.Student.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Student.Services.IServices;
+using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService;
 
 namespace SchoolManagementSystemAPI.Services.Student.Services
 {
@@ -14,21 +15,29 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
         private readonly IStudentRepository _repo;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
-        private readonly IConfiguration _config;   
+        private readonly IConfiguration _config;
+        private readonly IGrpcApplicationUserClientService _grpcApplication;
 
-        public StudentService(IStudentRepository repo, IMapper mapper, IUserService userService, IConfiguration config)
+        public StudentService(
+            IStudentRepository repo, 
+            IMapper mapper, 
+            IUserService userService, 
+            IConfiguration config,
+            IGrpcApplicationUserClientService grpcApplication
+            )
         {
             _repo = repo;
             _mapper = mapper;
             _userService = userService; 
             _config = config;
+            _grpcApplication = grpcApplication;
         }
 
         public async Task<bool> DeleteStudentById(string id)
         {
             try
             {
-                var st = await _repo.GetByKey(id);
+                var st = await _repo.GetById(id);
                 if (st != null)
                 {
                     _repo.Delete(st);
@@ -53,7 +62,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
                 IEnumerable<StudentSchema> st = await _repo.GetAll();
                 if (!st.IsNullOrEmpty())
                 {
-                    IEnumerable<UserResponseDTO> response = await _userService.getUserByRole();
+                    IEnumerable<UserResponseDTO> response = _grpcApplication.GetStudents(); //await _userService.getUserByRole();
                    var student = response.Join(st, x => x.Id.ToLower(), y => y.RegId.ToLower(), (x, y) => new StudentDTO(x, y));
                     return student;
                 }
@@ -72,7 +81,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
                 StudentSchema st = await _repo.GetById(id);
                 if (st != null)
                 {
-                    UserResponseDTO userDet = await _userService.getUserById(id.ToString());
+                    UserResponseDTO userDet = _grpcApplication.GetStudentById(id); //await _userService.getUserById(id.ToString());
                     StudentDTO res = new StudentDTO(userDet, st);
                     return res;
                 }

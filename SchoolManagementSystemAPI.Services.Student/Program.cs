@@ -7,6 +7,7 @@ using SchoolManagementSystemAPI.Services.Student.Repositories.Data;
 using SchoolManagementSystemAPI.Services.Student.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Student.Services;
 using SchoolManagementSystemAPI.Services.Student.Services.IServices;
+using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService;
 using SchoolManagementSystemAPI.Services.Student.Utils.RabbitMqBus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddHostedService<RabbitMQConsumer>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IGrpcApplicationUserClientService, GrpcApplicationUserClientService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

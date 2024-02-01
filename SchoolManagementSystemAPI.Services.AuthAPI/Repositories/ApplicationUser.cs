@@ -18,7 +18,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
         public string? Religion { get; set; }
         //public required string? imgUrl { get; set; }
 
-        [NotMapped]
+        [NotMapped] 
         public IFormFile? Profile { get; set; }
     }
 

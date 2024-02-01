@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace SchoolManagementSystemAPI.Services.Student.Migrations
 {
     /// <inheritdoc />
-    public partial class Student : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +17,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Migrations
                     AdmissionNo = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClassId = table.Column<int>(type: "int", nullable: false),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    RegId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RegId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

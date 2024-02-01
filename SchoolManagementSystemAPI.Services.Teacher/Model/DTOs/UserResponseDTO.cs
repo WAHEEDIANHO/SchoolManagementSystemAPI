@@ -38,8 +38,5 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Model.DTOs
             DateofBirth = user.DateofBirth;
             Religion = user.Religion;
         }
-
-        
-
     }
 }

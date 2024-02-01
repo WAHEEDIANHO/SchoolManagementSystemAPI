@@ -5,9 +5,9 @@ using SchoolManagementSystemAPI.Services.Student.Services.IServices;
 
 namespace SchoolManagementSystemAPI.Services.Student.Controllers
 {
-
+    [ApiController]
     [Route("api/student")]
-    public class StudentController : Controller
+    public class StudentController : ControllerBase
     {
         private readonly IStudentService _service;
         private readonly ResponseDTO response;
@@ -42,10 +42,31 @@ namespace SchoolManagementSystemAPI.Services.Student.Controllers
             {
                 response.Result = await _service.GetStudentById(id);
                 return Ok(response);
-                    
-            }catch (Exception ex) { 
+
+            } catch (Exception ex) {
                 response.IsSuccessful = false;
                 response.message = ex.Message;
+                return StatusCode(500, response);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveStudent(string id)
+        {
+            try { 
+                if(await _service.DeleteStudentById(id))
+                 {
+                    response.Result = "Deleted successfully";
+                    return Ok(response);
+                }
+
+                response.IsSuccessful = false;
+                response.message = "Unable to delete student";
+                return BadRequest(response);
+            }catch (Exception ex)
+            {
+                response.IsSuccessful = false;
+                response.message = ex.ToString();
                 return StatusCode(500, response);
             }
         }

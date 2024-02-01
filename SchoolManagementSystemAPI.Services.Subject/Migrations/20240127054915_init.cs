@@ -16,12 +16,12 @@ namespace SchoolManagementSystemAPI.Services.SchoolUtils.Migrations
                 columns: table => new
                 {
                     GradeNumber = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
-                    SubjectTeacher = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SubjectTitle = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SubjectTeacher = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClassSubjects", x => new { x.GradeNumber, x.SubjectId });
+                    table.PrimaryKey("PK_ClassSubjects", x => new { x.GradeNumber, x.SubjectTitle });
                 });
 
             migrationBuilder.CreateTable(
@@ -30,7 +30,7 @@ namespace SchoolManagementSystemAPI.Services.SchoolUtils.Migrations
                 {
                     GradeNumber = table.Column<int>(type: "int", nullable: false),
                     GradeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GradeTeacher = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    GradeTeacher = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -23,6 +23,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRepository", "Generi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystem.Integrations.MessageBus", "SchoolManagementSystem.Integrations.MessageBus\SchoolManagementSystem.Integrations.MessageBus.csproj", "{58BE770D-1536-4D79-8918-3FFCD32208BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{24FA8C35-E344-421E-ACC7-D620FEACB54E}"
+	ProjectSection(SolutionItems) = preProject
+		ingress-srv.yaml = ingress-srv.yaml
+		local-pvc.yaml = local-pvc.yaml
+		mssql-depl.yaml = mssql-depl.yaml
+		rabbitmq-sms-depl.yaml = rabbitmq-sms-depl.yaml
+		sms-np-srv.yaml = sms-np-srv.yaml
+		sms-auth-depl.yaml = sms-auth-depl.yaml
+		teacher-depl.yaml = teacher-depl.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +80,7 @@ Global
 		{F547D4CE-919A-4609-9FDF-2C606304F1EC} = {03079080-A708-4B4C-9AF6-5590F075A677}
 		{6D466205-CD77-4972-81AF-7AE1209BDB55} = {57D970FF-6805-4B19-AE24-9F1D9BDC19B8}
 		{58BE770D-1536-4D79-8918-3FFCD32208BF} = {57D970FF-6805-4B19-AE24-9F1D9BDC19B8}
+		{24FA8C35-E344-421E-ACC7-D620FEACB54E} = {03079080-A708-4B4C-9AF6-5590F075A677}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77EBA48B-C328-4AF8-8ABC-BEFD7368BA55}

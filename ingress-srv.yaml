@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+    name: sms-ingress-srv
+    annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kuberbetes.io/use-regrex: 'true'
+spec:
+    rules:
+        - host: school-management.com
+          http:
+            paths:
+                - path: /api/teacher
+                  pathType: Prefix
+                  backend:
+                    service:
+                        name: teacherservice-srv
+                        port: 
+                            number: 80
+                - path: /api/user
+                  pathType: Prefix
+                  backend: 
+                    service:
+                        name: sms-auth-srv
+                        port:
+                            number: 80

@@ -5,8 +5,9 @@ using SchoolManagementSystemAPI.Services.SchoolUtils.Services.IService;
 
 namespace SchoolManagementSystemAPI.Services.SchoolUtils.Controllers
 {
+    [ApiController]
     [Route("class-subject")]
-    public class ClassSubjectController : Controller
+    public class ClassSubjectController : ControllerBase
     {
         private readonly IClassSubjectService _service;
         private readonly ResponseDTO _resp;

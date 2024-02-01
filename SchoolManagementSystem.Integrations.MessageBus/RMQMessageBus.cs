@@ -13,6 +13,7 @@ namespace SchoolManagementSystem.Integrations.MessageBus
         private readonly string _hostname;
         private readonly string _username;
         private readonly string _password;
+        private readonly string _vhost;
         private IConnection _conn;
 
         public RMQMessageBus()
@@ -20,7 +21,16 @@ namespace SchoolManagementSystem.Integrations.MessageBus
             _hostname = "localhost";
             _username = "guest";
             _password = "guest";
-        } 
+            _vhost = "/";
+        }
+
+        public RMQMessageBus(string hostanme, string username, string password, string vhost)
+        {
+            _hostname = hostanme;
+            _username = username;
+            _password = password;
+            _vhost = vhost;
+        }
 
         public void SendMessage(object msg, string? exchangeName, List<string> queue)
         {
@@ -58,7 +68,8 @@ namespace SchoolManagementSystem.Integrations.MessageBus
                 {
                     HostName = _hostname,
                     UserName = _username,
-                    Password = _password
+                    Password = _password,
+                    VirtualHost = _vhost,
                 };
                 _conn = factory.CreateConnection();
             }catch (Exception ex) { }
