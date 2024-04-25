@@ -1,0 +1,11 @@
+//syntax = "proto3";
+//
+//
+//option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+//
+//service GrpcSubject {
+//  rpc GetSubjectTopics (GetAll) returns (ListSubject);
+//  rpc GetTopicById (SubjectDataGrpc) returns (SubjectActionState);
+//  rpc UpdateTopic (ById) returns (SubjectDataGrpc);
+//  rpc DeleteTopic (ById) returns (SubjectDataGrpc);
+//}

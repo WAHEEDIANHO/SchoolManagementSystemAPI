@@ -1,0 +1,43 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: schoolmanagementsystemapi
+build:
+  artifacts:
+    - image: docker.io/waheedianho/parentservice
+      context: SchoolManagementSystemAPI.Services.Parent
+      docker: 
+        dockerfile: Dockerfile 
+      sync:
+        manual:
+            - src: '**/*.cs'
+              dest: .
+    - image: docker.io/waheedianho/smsauth
+      context: SchoolManagementSystemAPI.Services.AuthAPI
+      docker:
+        dockerfile: Dockerfile
+    - image: docker.io/waheedianho/studentservice
+      context: SchoolManagementSystemAPI.Services.Student
+      docker:
+        dockerfile: Dockerfile
+    - image: docker.io/waheedianho/teacherservice
+      context: SchoolManagementSystemAPI.Services.Teacher
+      docker:
+        dockerfile: Dockerfile
+    - image: waheedianho/smsgeneral
+      context: SchoolManagementSystemAPI.Services.General
+      docker:
+        dockerfile: Dockerfile
+manifests:  
+    rawYaml:
+        - ingress-srv.yaml
+        # - local-pvc.yaml
+        # - mssql-depl.yaml
+        - parent-depl.yaml
+        # - rabbitmq-sms-depl.yaml
+        - sms-auth-depl.yaml
+#     - sms-np-srv.yaml
+        - student-depl.yaml
+        - teacher-depl.yaml
+        - sms-gen.yaml 
+#     - k8s/sms-np-srv.yaml

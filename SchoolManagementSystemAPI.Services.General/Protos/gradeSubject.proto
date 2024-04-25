@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcGradeSubject {
+	rpc GetClassSubject(ByGradeNumber) returns (ListGradeSubject);
+	rpc GetSingleClassSubject(GetSingleGradeSubject) returns (GradeSubjectDataGrpc);
+	rpc DeleteOneClassSubject(GetSingleGradeSubject) returns (GradeSubjectActionState);
+	rpc AddSujectToClass(GradeSubjectDataGrpc) returns (GradeSubjectActionState);
+}
+
+message ByGradeNumber {
+	int32 GradeNumber = 1; 
+}
+
+message GradeSubjectActionState { 
+	bool Resp = 1;
+}
+message LessonGrpc {
+	string lessonId = 1;
+	string title = 2;
+	string objectives = 3;
+	string transcript = 4;
+	string mediaUrl = 5;
+	bytes media = 6;
+	string topicId = 7;
+}
+message TopicGrpc {
+	string topicId = 1;
+	string topicName = 2;
+	int32 term = 3;
+	int32 gradeNumber = 4;
+	string subjectTitle = 5;
+	string description = 6;
+	repeated LessonGrpc lessons = 7;
+}
+message GradeSubjectDataGrpc {
+	int32 gradeNumber = 1;
+	string subjectTitle = 2;
+	string subjectTeacher = 3;
+	repeated TopicGrpc topics = 4;
+}
+
+message GetSingleGradeSubject {	
+	int32 GradeNumber = 1;
+	string SubjectTitle = 2;
+}
+
+message ListGradeSubject {
+	repeated GradeSubjectDataGrpc GradeSubjects = 1;
+}
+
+
+
+

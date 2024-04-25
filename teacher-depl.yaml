@@ -10,7 +10,7 @@ spec:
     template:
         metadata:
             labels:
-                app: teacherservic
+                app: teacherservice
         spec:
             containers:
             - name: teacherservice

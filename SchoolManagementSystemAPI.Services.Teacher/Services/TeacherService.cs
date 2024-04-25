@@ -16,6 +16,10 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
         private readonly IGrpcApplicationUserClientService _grpcApplicationUser;
         private readonly IConfiguration _config;
         private IMapper _mapper;
+        private readonly string? hostname;
+        private readonly string? userName;
+        private readonly string? passWord;
+        private readonly string? vHost;
 
         public TeacherService(
             ITeacherRepository repo, IMapper mapper, 
@@ -29,6 +33,11 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
             _config = config;
             _userService = userService;
             _grpcApplicationUser = grpcApplicationUser;
+
+            hostname = _config.GetValue<string>("RabbitmqConn:Host");
+            userName = _config.GetValue<string>("RabbitmqConn:Username");
+            passWord = _config.GetValue<string>("RabbitmqConn:Password");
+            vHost = _config.GetValue<string>("RabbitmqConn:VirtualHost");
         }
 
         public async Task<bool> DeleteTeacherById(string id)
@@ -39,7 +48,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
                 if (res != null)
                 {
                     _repo.Delete(res);
-                    RMQMessageBus messenger = new();
+                    RMQMessageBus messenger = new RMQMessageBus(hostname, userName, passWord, vHost);
                     MsgRegTeacherDTO msg = _mapper.Map<MsgRegTeacherDTO>(res);
                     messenger.SendMessage(msg, _config.GetValue<string>("ExchnageAndQueueName:TeacherDelQueue"), null);
                     return true;

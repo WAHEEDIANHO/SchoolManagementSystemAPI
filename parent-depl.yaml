@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: parentservice-depl
+spec:
+    replicas: 1
+    selector:
+        matchLabels: 
+            app: parentservice
+    template:
+        metadata:
+            labels:
+                app:  parentservice
+        spec:
+            containers:
+            - name:  parentservice
+              image: docker.io/waheedianho/parentservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata: 
+    name:  parentservice-srv
+spec:
+    type: ClusterIP
+    selector:
+        app:  parentservice
+    ports:
+        - name:  parentservice
+          protocol: TCP
+          port: 80
+          targetPort: 80
+
+
+         
+    
+    

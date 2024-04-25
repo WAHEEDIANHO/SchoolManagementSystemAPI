@@ -23,9 +23,11 @@ namespace SchoolManagementSystemAPI.Services.Student.Utils.RabbitMqBus
 
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
-                UserName = "guest",
-                Password = "guest"
+                HostName = _config.GetValue<string>("RabbitmqConn:Host"),
+                UserName = _config.GetValue<string>("RabbitmqConn:Username"),
+                Password = _config.GetValue<string>("RabbitmqConn:Password"), //"pwQAxWoSgrrF30FS2y4nCeRAR52IwiVm",
+                VirtualHost = _config.GetValue<string>("RabbitmqConn:VirtualHost"),
+                AutomaticRecoveryEnabled = true,
             };
 
             string queueName = _config.GetValue<string>("ExchnageAndQueueName:StudentRegQueue");

@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcNotification {
+	rpc CreateNotification (NotificationGrpcReqData) returns (NotificationActionState);
+	rpc GetAllNotifications (GetEmptyNotification) returns (ListNotification);
+	rpc GetNotification (NotificationId) returns (NotificationGrpcData);
+	rpc RemoveNotification (NotificationId) returns (NotificationActionState);
+	rpc UpdateNotificatiion (NotificationUpdate) returns (NotificationActionState);
+}
+
+message GetEmptyNotification {}
+message NotificationActionState { bool Res = 1; }
+message NotificationId { string Id = 1; }
+
+message NotificationGrpcData {
+	string Id = 1;
+    string Title =2;
+    string Details = 3;
+    string PostedBy = 4;
+    string Created = 5;
+}
+message NotificationGrpcReqData {
+    string Title =1;
+    string Details = 2;
+    string PostedBy = 3;
+}
+
+message ListNotification {
+    repeated NotificationGrpcData Notifications = 1;
+}
+
+message NotificationUpdate {
+    string NotificationId = 1;
+    NotificationGrpcReqData NotificationUpdateData = 2;
+}

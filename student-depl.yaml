@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: studentservice-depl
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: studentservice
+    template:
+        metadata:
+            labels:
+                app: studentservice
+        spec:
+            containers:
+                - name: studentservice
+                  image: docker.io/waheedianho/studentservice
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: studentservice-srv
+spec:   
+    type: ClusterIP
+    selector:   
+        app:    studentservice
+    ports:
+        - name: studentservice
+          port: 80
+          targetPort: 80
+          protocol: TCP
+        - name: studentservice-swagger
+          port: 8891
+          targetPort: 8891
+          protocol: TCP
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+    # name: swagger-srv
+# spec:
+#     type: LoadBalancer
+#     selector:
+#         app: studentservice
+#     ports:
+#         - name: studentservice-swagger
+#           protocol: TCP
+#           port: 8891
+#           targetPort: 8891
+      

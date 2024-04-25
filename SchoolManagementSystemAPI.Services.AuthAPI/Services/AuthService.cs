@@ -44,20 +44,13 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
 
                 if (user == null || !isValid)
                 {       
-                    return new LoginResponseDTO() { user = new(), token = "" };
+                    return new LoginResponseDTO() { id = "", token = "" };
                 }
 
                 var roles = await _authRepository.GetRoles(user);
                 var token = _jwtTokenGenerator.GenerateToken(user, roles);
-
-                UserDTO userDTO = new()
-                {
-                    email = user.Email,
-                    phoneNumber = user.PhoneNumber,
-                    id = user.Id,
-                };
-
-                return new LoginResponseDTO() { user = userDTO, token = token, };
+                
+                return new LoginResponseDTO() { id = user.Id, token = token, };
             }
             catch (Exception ex)
             {
@@ -122,7 +115,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                             ParentRegistrationDTO parent = (ParentRegistrationDTO) (RegisterRequestDTO) registerRequestDTO;
                             //Console.WriteLine("Brodcasting ur message PARENT");
 
-                            user = await _authRepository.GetUserById(registerRequestDTO.Email);
+                            user = await _authRepository.GetUserByUsername(registerRequestDTO.Email);
                             MsgRegParentDTO msgParentReg = new()
                             {
                                 RegId = user.Id,
@@ -131,6 +124,9 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                             message = new RMQMessageBus();
                             message.SendMessage(msgParentReg, _config.GetValue<string>("ExchnageAndQueueName:ParentRegQueue"), null);
                             //teacers creation goes here
+                            break;
+                        default:
+                            Console.WriteLine("No action");
                             break;
                     }
                 }
@@ -181,6 +177,17 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
                 var res =  _authRepository.GetUsersByRole(role);
                 return _mapper.Map<IEnumerable<UserResponseDTO>>(res);
             }catch(Exception ex) { throw; };
+        }
+
+        public IEnumerable<UserResponseDTO> GetUsersByGender(string gender)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(gender)) return Enumerable.Empty<UserResponseDTO>();
+                var res = _authRepository.GetUsersByRole(gender);
+                return _mapper.Map<IEnumerable<UserResponseDTO>>(res);
+            }
+            catch (Exception ex) { throw; };
         }
 
         public IEnumerable<UserResponseDTO> GetAllUsers()

@@ -22,7 +22,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Controllers
             _grpcService = grpcService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = "TEACHER, STUDENT")]
         [HttpGet]
         public async Task<ActionResult<ResponseDTO>> GetTeacher()
         {

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcSession {
+	rpc GetAllSession (GetEmptySession) returns (ListSession); 
+	rpc CreateSession (SessionGrpcData) returns (SessionActionState); 
+	rpc GetSessionById (SessionId) returns (SessionGrpcData); 
+	rpc DeleteSessionById (SessionId) returns (SessionGrpcData); 
+}
+
+message GetEmptySession {}
+message SessionActionState { bool Resp = 1; }
+message SessionGrpcData {
+	string SessionStartDate = 1;
+	string SessionEndDate = 2;
+    string SessionName = 3;
+}
+
+message SessionId {
+	string Id = 1;
+}
+
+message ListSession {
+	repeated SessionGrpcData sessions = 1;
+}

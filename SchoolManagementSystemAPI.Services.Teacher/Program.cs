@@ -56,7 +56,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-Console.WriteLine($"------> db uri = {app.Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
+//Console.WriteLine($"------> db uri = {app.Configuration.GetValue<string>("ConnectionStrings:DefaultConnection")}");
 ApplyMigration();
 app.Run();
 

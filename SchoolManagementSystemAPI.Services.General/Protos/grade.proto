@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General"; //generate setup to the affore menetion name space when build
+
+service GrpcGrade {
+	rpc GetAllGrade (GradeEmpty) returns (ListGrade);
+	rpc CreateGrade (GradeDataGrpc) returns (GradeActionState);
+	rpc GetByGradeId (ResourceId) returns (GradeDataGrpc);
+	rpc ChangeGradeTeacher (GradeDataGrpc) returns (GradeActionState);
+	rpc DeleteGrade (ResourceId) returns (GradeActionState);
+}
+
+message GradeEmpty {}
+message GradeActionState { 
+	bool Resp = 1;
+}
+message ResourceId {
+	string Id = 1;
+}
+
+message GradeDataGrpc {
+	 string GradeName = 1;
+     int32 GradeNumber = 2;
+     string GradeTeacher  = 3;
+}
+
+message ListGrade {
+	repeated GradeDataGrpc Grades = 1;
+}
+
+
+

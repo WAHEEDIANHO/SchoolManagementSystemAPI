@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SchoolManagementSystemAPI.Services.Parent;
 using SchoolManagementSystemAPI.Services.Parent.Extension;
 using SchoolManagementSystemAPI.Services.Parent.Repositories;
 using SchoolManagementSystemAPI.Services.Parent.Repositories.Data;
@@ -7,7 +8,6 @@ using SchoolManagementSystemAPI.Services.Parent.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Parent.Services;
 using SchoolManagementSystemAPI.Services.Parent.Services.IServices;
 using SchoolManagementSystemAPI.Services.Parent.Utils.RabbitMQ;
-using SchoolManagementSystemAPI.Services.Student;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,5 +51,18 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+ApplyMigration();
 app.Run();
+
+void ApplyMigration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        if (_db.Database.GetPendingMigrations().Count() > 0)
+        {
+            _db.Database.Migrate();
+        }
+    }
+}

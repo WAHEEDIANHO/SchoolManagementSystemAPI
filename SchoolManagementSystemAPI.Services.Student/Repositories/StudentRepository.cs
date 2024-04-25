@@ -13,6 +13,11 @@ namespace SchoolManagementSystemAPI.Services.Student.Repositories
             _context = context; 
         }
 
+        public IEnumerable<StudentSchema> GetByGrade(int GradeId)
+        {
+           return _context.Students.Where(u => u.ClassId == GradeId);
+;        }
+
         public async Task<StudentSchema> GetById(string id)
         {
             return await _context.Students.FirstAsync(u => u.RegId.ToLower() == id.ToLower());

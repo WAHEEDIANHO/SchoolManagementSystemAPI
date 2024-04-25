@@ -11,6 +11,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI
         {
             var mappingConfiguration = new MapperConfiguration(config =>
             {
+                config.CreateMap<ApplicationUser, RegisterRequestDTO>().ReverseMap();
                 config.CreateMap<ApplicationUser, StudentRegisterDTO>().ReverseMap();
                 config.CreateMap<ApplicationUser, TeacherRegisterDTO>().ReverseMap();
                 config.CreateMap<ApplicationUser, ParentRegistrationDTO>().ReverseMap();

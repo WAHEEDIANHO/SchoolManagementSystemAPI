@@ -10,5 +10,6 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } 
+        public DbSet<IdempotencySchema> RequestLog { get; set; } 
     }
 }

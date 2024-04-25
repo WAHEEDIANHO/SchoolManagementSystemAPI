@@ -10,7 +10,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
 {
     public class RabbitMQConsumer : BackgroundService, IRabbitMQConsumer
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _config;
         private readonly IConnection _conn;
         private readonly IModel teacherDelChannel;
         private readonly IModel parentDelChannel;
@@ -23,7 +23,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
 
         public RabbitMQConsumer(IConfiguration configuration, UserDeleteService service)
         {
-            _configuration = configuration;
+            _config = configuration;
             _service = service;
 
             var factory = new ConnectionFactory()
@@ -32,10 +32,10 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
                 UserName = "guest",
                 Password = "guest",*/
 
-                HostName = "fly.rmq.cloudamqp.com",
-                UserName = "upjljwqx",
-                Password = "pwQAxWoSgrrF30FS2y4nCeRAR52IwiVm",
-                VirtualHost = "upjljwqx",
+                HostName = _config.GetValue<string>("RabbitmqConn:Host"),
+                UserName = _config.GetValue<string>("RabbitmqConn:Username"),
+                Password = _config.GetValue<string>("RabbitmqConn:Password"), //"pwQAxWoSgrrF30FS2y4nCeRAR52IwiVm",
+                VirtualHost = _config.GetValue<string>("RabbitmqConn:VirtualHost"),
                 AutomaticRecoveryEnabled = true,
             };
             _conn = factory.CreateConnection();
@@ -44,9 +44,9 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Utils.RabbitMQ
             parentDelChannel = _conn.CreateModel();
             studentDelChannel = _conn.CreateModel();
 
-            teacherQueueName = _configuration.GetValue<string>("ExchnageAndQueueName:TeacherDelQueue");
-            parentQueueName = _configuration.GetValue<string>("ExchnageAndQueueName:ParentDelQueue");
-            studentQueueName = _configuration.GetValue<string>("ExchnageAndQueueName:StudentDelQueue");
+            teacherQueueName = _config.GetValue<string>("ExchnageAndQueueName:TeacherDelQueue");
+            parentQueueName = _config.GetValue<string>("ExchnageAndQueueName:ParentDelQueue");
+            studentQueueName = _config.GetValue<string>("ExchnageAndQueueName:StudentDelQueue");
 
             teacherDelChannel.QueueDeclare(teacherQueueName, false, false, false, null);
             parentDelChannel.QueueDeclare(parentQueueName, false, false, false, null);

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\gradeSubject.proto" />
     <None Remove="Protos\user.proto" />
   </ItemGroup>
 
@@ -37,7 +38,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\gradeSubject.proto">
+      <GrpcService>Client</GrpcService>
+    </Protobuf>
     <Protobuf Include="Protos\user.proto">
+      <GrpcService>Client</GrpcService>
+    </Protobuf>
+    <Protobuf Include="Protos\webinar.proto">
       <GrpcService>Client</GrpcService>
     </Protobuf>
   </ItemGroup>

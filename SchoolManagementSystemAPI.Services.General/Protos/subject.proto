@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General"; 
+
+service GrpcSubject {
+	rpc GetAllSubject (GetAll) returns (ListSubject);
+	rpc CreateSubject (SubjectDataGrpc) returns (SubjectActionState);
+	rpc GetSubjectbyId (ById) returns (SubjectDataGrpc);
+	rpc DeleteSubjectbyId (ById) returns (SubjectDataGrpc);
+}
+
+message SubjectDataGrpc {
+	 string SubjectTitle = 1;
+}
+
+message GetAll {}
+message SubjectActionState { 
+	bool res = 1;
+ }
+
+message ById {
+	string Id = 1;
+}
+
+message ListSubject {
+	repeated SubjectDataGrpc Subjects = 1;
+}

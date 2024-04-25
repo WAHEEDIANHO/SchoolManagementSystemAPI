@@ -14,13 +14,22 @@ namespace SchoolManagementSystemAPI.Services.Parent.Services
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         private readonly IConfiguration _config;
+        private readonly string? hostname;
+        private readonly string? userName;
+        private readonly string? passWord;
+        private readonly string? vHost;
 
         public ParentService(IParentRepository repo, IMapper mapper, IUserService userService, IConfiguration config)
         {
             _repo = repo;
             _mapper = mapper;
             _userService = userService;
-            _config = config;   
+            _config = config;
+
+            hostname = _config.GetValue<string>("RabbitmqConn:Host");
+            userName = _config.GetValue<string>("RabbitmqConn:Username");
+            passWord = _config.GetValue<string>("RabbitmqConn:Password");
+            vHost = _config.GetValue<string>("RabbitmqConn:VirtualHost");
         }
 
        
@@ -33,7 +42,7 @@ namespace SchoolManagementSystemAPI.Services.Parent.Services
                 if (res != null)
                 {
                     _repo.Delete(res);
-                    RMQMessageBus messenger = new();
+                    RMQMessageBus messenger = new RMQMessageBus(hostname, userName, passWord, vHost);
                     MsgRegParentDTO msg = _mapper.Map<MsgRegParentDTO>(res);
                     messenger.SendMessage(msg, _config.GetValue<string>("ExchnageAndQueueName:ParentDelQueue"), null);
                     return true;

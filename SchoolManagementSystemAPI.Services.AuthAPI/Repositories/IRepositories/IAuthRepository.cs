@@ -10,6 +10,9 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories.IRepositories
         Task<ApplicationUser> GetUserByUsername(string username);
 
         public IEnumerable<ApplicationUser> GetUsersByRole(string role);
+
+        public IEnumerable<ApplicationUser> GetUsersbyGender(string gender);
+
         public IEnumerable<ApplicationUser> GetAllUsers();
 
         public Task<bool> CheckPassword(ApplicationUser user,string password);

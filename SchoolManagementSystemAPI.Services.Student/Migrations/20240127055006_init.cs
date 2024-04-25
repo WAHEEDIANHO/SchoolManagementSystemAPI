@@ -16,7 +16,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Migrations
                 {
                     AdmissionNo = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClassId = table.Column<int>(type: "int", nullable: false),
-                    SessionId = table.Column<int>(type: "int", nullable: false),
+                    SessionId = table.Column<int>(type: "nvarchar(50)", nullable: false),
                     RegId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

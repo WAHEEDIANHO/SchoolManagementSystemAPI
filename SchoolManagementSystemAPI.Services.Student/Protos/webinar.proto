@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.Student";
+
+service GrpcWebinar {
+  rpc GetUpcomingWebinars (GradeNumber) returns (WebinarListGrpc);
+  rpc GetCurrentWebinar (GradeNumber) returns (WebinargRPC);
+}
+
+message GradeNumber {
+  int32 num = 1;
+}
+
+message TopicWebinarGrpc {
+  string topicId = 1;
+  string topicName = 2;
+  int32 term = 3;
+  int32 gradeNumber = 4;
+  string subjectTitle = 5;
+  string description = 6;
+}
+
+message WebinargRPC {
+  string WebinarId = 1;
+  string TeacherInCharge = 2;
+  string Link = 5;
+  string TopicId = 6;
+  string WebinarDate = 7;
+  string WebinarHour = 8;
+  string WebinarMinute = 9;
+  TopicWebinarGrpc Topic = 10;
+}
+
+message WebinarListGrpc {
+  repeated WebinargRPC Webinars = 1;
+}
+
+
+

@@ -17,22 +17,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.Parent", "SchoolManagementSystemAPI.Services.Parent\SchoolManagementSystemAPI.Services.Parent.csproj", "{23E7E981-C52B-4A6A-A2DD-40309D38312B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.SchoolUtils", "SchoolManagementSystemAPI.Services.Subject\SchoolManagementSystemAPI.Services.SchoolUtils.csproj", "{F547D4CE-919A-4609-9FDF-2C606304F1EC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRepository", "GenericRepository\GenericRepository.csproj", "{6D466205-CD77-4972-81AF-7AE1209BDB55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystem.Integrations.MessageBus", "SchoolManagementSystem.Integrations.MessageBus\SchoolManagementSystem.Integrations.MessageBus.csproj", "{58BE770D-1536-4D79-8918-3FFCD32208BF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{24FA8C35-E344-421E-ACC7-D620FEACB54E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8ss", "k8ss", "{24FA8C35-E344-421E-ACC7-D620FEACB54E}"
 	ProjectSection(SolutionItems) = preProject
 		ingress-srv.yaml = ingress-srv.yaml
 		local-pvc.yaml = local-pvc.yaml
 		mssql-depl.yaml = mssql-depl.yaml
+		parent-depl.yaml = parent-depl.yaml
 		rabbitmq-sms-depl.yaml = rabbitmq-sms-depl.yaml
-		sms-np-srv.yaml = sms-np-srv.yaml
 		sms-auth-depl.yaml = sms-auth-depl.yaml
+		sms-gen.yaml = sms-gen.yaml
+		sms-np-srv.yaml = sms-np-srv.yaml
+		student-depl.yaml = student-depl.yaml
 		teacher-depl.yaml = teacher-depl.yaml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolManagementSystemAPI.Services.General", "SchoolManagementSystemAPI.Services.General\SchoolManagementSystemAPI.Services.General.csproj", "{242D388C-12F4-4407-8C20-4E5CA763BD31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMSApiGateway", "SMSApiGateway\SMSApiGateway.csproj", "{AE1D66D3-A304-48F5-A170-6DD35E72393E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,10 +61,6 @@ Global
 		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23E7E981-C52B-4A6A-A2DD-40309D38312B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F547D4CE-919A-4609-9FDF-2C606304F1EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D466205-CD77-4972-81AF-7AE1209BDB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,6 +69,14 @@ Global
 		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58BE770D-1536-4D79-8918-3FFCD32208BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{242D388C-12F4-4407-8C20-4E5CA763BD31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{242D388C-12F4-4407-8C20-4E5CA763BD31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{242D388C-12F4-4407-8C20-4E5CA763BD31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{242D388C-12F4-4407-8C20-4E5CA763BD31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE1D66D3-A304-48F5-A170-6DD35E72393E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE1D66D3-A304-48F5-A170-6DD35E72393E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE1D66D3-A304-48F5-A170-6DD35E72393E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE1D66D3-A304-48F5-A170-6DD35E72393E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,10 +86,11 @@ Global
 		{A1CEFBBF-2543-4699-883D-89F819D391E9} = {03079080-A708-4B4C-9AF6-5590F075A677}
 		{9CE0ED8F-57A5-45D6-9049-1EEF4BD3AF3C} = {03079080-A708-4B4C-9AF6-5590F075A677}
 		{23E7E981-C52B-4A6A-A2DD-40309D38312B} = {03079080-A708-4B4C-9AF6-5590F075A677}
-		{F547D4CE-919A-4609-9FDF-2C606304F1EC} = {03079080-A708-4B4C-9AF6-5590F075A677}
 		{6D466205-CD77-4972-81AF-7AE1209BDB55} = {57D970FF-6805-4B19-AE24-9F1D9BDC19B8}
 		{58BE770D-1536-4D79-8918-3FFCD32208BF} = {57D970FF-6805-4B19-AE24-9F1D9BDC19B8}
 		{24FA8C35-E344-421E-ACC7-D620FEACB54E} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{242D388C-12F4-4407-8C20-4E5CA763BD31} = {03079080-A708-4B4C-9AF6-5590F075A677}
+		{AE1D66D3-A304-48F5-A170-6DD35E72393E} = {01C9FD56-4DFE-4E7B-B5A6-FB08BA4540C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77EBA48B-C328-4AF8-8ABC-BEFD7368BA55}

@@ -2,6 +2,7 @@
 using Grpc.Net.Client;
 using SchoolManagementSystemAPI.Services.Student.Model.DTOs;
 using SchoolManagementSystemAPI.Services.Student;
+using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService.IGrpcClientService;
 
 namespace SchoolManagementSystemAPI.Services.Student.Utils.GrpcService
 {

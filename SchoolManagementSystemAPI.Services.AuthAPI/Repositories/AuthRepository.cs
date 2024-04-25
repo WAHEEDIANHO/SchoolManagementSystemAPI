@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystemAPI.Services.AuthAPI.Model.DTOs;
 using SchoolManagementSystemAPI.Services.AuthAPI.Repositories.Data;
 using SchoolManagementSystemAPI.Services.AuthAPI.Repositories.IRepositories;
+using System.Data;
 
 namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
 {
@@ -109,6 +110,11 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return _db.ApplicationUsers.ToList();
+        }
+
+        public IEnumerable<ApplicationUser> GetUsersbyGender(string gender)
+        {
+            return _db.ApplicationUsers.Where(u => u.Gender.ToLower() == gender.ToLower());
         }
 
         public async Task<bool> CheckPassword(ApplicationUser user, string password)

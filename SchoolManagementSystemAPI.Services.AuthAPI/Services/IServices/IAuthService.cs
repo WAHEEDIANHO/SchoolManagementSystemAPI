@@ -11,6 +11,8 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services.IServices
 
         public Task<UserResponseDTO> GetUser(string id);
         public IEnumerable<UserResponseDTO> GetUsersByRole(string role);
+        public IEnumerable<UserResponseDTO> GetUsersByGender(string gender);
+
         public IEnumerable<UserResponseDTO> GetAllUsers();
 
     }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SchoolManagementSystemAPI.Services.AuthAPI.Model.DTOs;
@@ -28,7 +30,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
                     return BadRequest(new LoginResponseDTO()
                     {
                         token = "",
-                        user = new()
+                        id = string.Empty
                     });
                 }
                 return Ok(loginCredential);
@@ -39,6 +41,25 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
         }
 
 
+        [Authorize]
+        [HttpGet("current-user")]
+        public async Task<ActionResult<ResponseDTO>> GetCurrentUser()
+        {
+            try
+            {
+                var user = User;
+                string userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userResponse = await _authService.GetUser(userId);
+                _responseDTO.Result = userResponse;
+                return Ok(_responseDTO);
+
+            }catch (Exception ex)
+            {
+                _responseDTO.IsSuccessful = false;
+                _responseDTO.message = ex.Message;
+                return StatusCode(500, _responseDTO);
+            }
+        }
        /* [HttpPost("register")]
         public async Task<ActionResult<ResponseDTO>> Register(RegisterRequestDTO registerRequest)
         {

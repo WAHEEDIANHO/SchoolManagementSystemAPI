@@ -6,7 +6,7 @@ using SchoolManagementSystemAPI.Services.Student.Model.DTOs;
 using SchoolManagementSystemAPI.Services.Student.Repositories;
 using SchoolManagementSystemAPI.Services.Student.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Student.Services.IServices;
-using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService;
+using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService.IGrpcClientService;
 
 namespace SchoolManagementSystemAPI.Services.Student.Services
 {
@@ -17,7 +17,10 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
         private readonly IUserService _userService;
         private readonly IConfiguration _config;
         private readonly IGrpcApplicationUserClientService _grpcApplication;
-
+        private readonly string? hostname;
+        private readonly string? userName;
+        private readonly string? passWord;
+        private readonly string? vHost;
         public StudentService(
             IStudentRepository repo, 
             IMapper mapper, 
@@ -31,6 +34,11 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
             _userService = userService; 
             _config = config;
             _grpcApplication = grpcApplication;
+
+            hostname = _config.GetValue<string>("RabbitmqConn:Host");
+            userName = _config.GetValue<string>("RabbitmqConn:Username");
+            passWord = _config.GetValue<string>("RabbitmqConn:Password");
+            vHost = _config.GetValue<string>("RabbitmqConn:VirtualHost");
         }
 
         public async Task<bool> DeleteStudentById(string id)
@@ -41,7 +49,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
                 if (st != null)
                 {
                     _repo.Delete(st);
-                    RMQMessageBus messenger = new();
+                    RMQMessageBus messenger = new RMQMessageBus(hostname, userName, passWord, vHost);
                     MsgRegStudentDTO msgDelStd = _mapper.Map<MsgRegStudentDTO>(st);
                     messenger.SendMessage(msgDelStd, _config.GetValue<string>("ExchnageAndQueueName:StudentDelQueue"), null);
                     return true;
@@ -69,6 +77,25 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
                 else return Enumerable.Empty<StudentDTO>();
             }
             catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<StudentDTO> GetByGrade(int GradeId)
+        {
+            try
+            {
+                IEnumerable<StudentSchema> st = _repo.GetByGrade(GradeId);
+                if(!st.IsNullOrEmpty())
+                {
+                    IEnumerable<UserResponseDTO> students = _grpcApplication.GetStudents();
+                    var gradeStudent = students.Join(st, x => x.Id.ToLower(), y => y.RegId.ToLower(), (x, y) => new StudentDTO(x, y));
+                    return gradeStudent;
+                }
+                else return Enumerable.Empty<StudentDTO>();
+            } 
+            catch(Exception ex)
             {
                 throw;
             }

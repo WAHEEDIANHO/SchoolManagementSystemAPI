@@ -32,7 +32,12 @@ namespace GenericRepository
 
         public async Task<T> GetByKey(string id)
         {
-            return await _context.Set<T>().FindAsync(id.ToString());
+            return await _context.Set<T>().FindAsync(id);
+        }
+
+        public async Task<T> GetByKey(Guid id)
+        {
+            return await _context.Set<T>().FindAsync(id);
         }
 
         public async void Update(T entity)

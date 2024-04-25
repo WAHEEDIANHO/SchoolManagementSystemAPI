@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sms-gen-depl
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: smsgeneral
+    template:   
+        metadata:
+            labels:
+                app: smsgeneral
+        spec:
+            containers:
+                - image: waheedianho/smsgeneral:latest
+                  name: smsgeneral
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: sms-auth-util-srv
+spec:
+    type: ClusterIP
+    selector:
+        app: smsgeneral
+    ports:
+        - name: smsgeneral
+          port: 80
+          targetPort: 80
+          protocol: TCP

@@ -10,7 +10,6 @@ namespace SchoolManagementSystemAPI.Services.Parent.Controllers
     {
         private readonly ResponseDTO response;
         private readonly IParentService _service;
-
         public ParentController(IParentService service)
         {
             _service = service;

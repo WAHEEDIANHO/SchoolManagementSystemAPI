@@ -11,7 +11,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Repositories
         [Required]
         public required int ClassId { get; set; }
         [Required]
-        public required int SessionId { get; set; }
+        public required string SessionId { get; set; }
         [Required]
         public required string RegId { get; set; }
 

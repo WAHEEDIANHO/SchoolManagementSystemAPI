@@ -14,7 +14,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Model.DTO
         public StudentDTO() { }
         public  string AdmissionNo { get; set; }
         public  int ClassId { get; set; }
-        public  int SessionId { get; set; }
+        public  string SessionId { get; set; }
         //public required string RegId { get; set; }
     }
 }

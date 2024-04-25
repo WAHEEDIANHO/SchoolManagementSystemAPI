@@ -2,7 +2,7 @@
 using SchoolManagementSystemAPI.Services.Parent.Model.DTOs;
 using SchoolManagementSystemAPI.Services.Parent.Repositories;
 
-namespace SchoolManagementSystemAPI.Services.Student
+namespace SchoolManagementSystemAPI.Services.Parent
 {
     public class MapperConfig
     {
@@ -11,6 +11,7 @@ namespace SchoolManagementSystemAPI.Services.Student
             var mappingConfiguration = new MapperConfiguration(config =>
             {
                 config.CreateMap<ParentSchema, MsgRegParentDTO>().ReverseMap();
+                config.CreateMap<UserResponseDTO, GrpcApplicationUserModel>().ReverseMap();
             })
             {
 

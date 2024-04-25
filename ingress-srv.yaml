@@ -3,9 +3,11 @@ kind: Ingress
 metadata:
     name: sms-ingress-srv
     annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kuberbetes.io/use-regrex: 'true'
+        # kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/use-regrex: 'true'
+        # nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+    ingressClassName: nginx
     rules:
         - host: school-management.com
           http:
@@ -17,6 +19,20 @@ spec:
                         name: teacherservice-srv
                         port: 
                             number: 80
+                - path: /api/student
+                  pathType: Prefix
+                  backend: 
+                    service:
+                        name: studentservice-srv
+                        port:
+                            number: 80
+                - path: /api/parent
+                  pathType: Prefix
+                  backend: 
+                    service:
+                        name: parentservice-srv
+                        port:
+                            number: 80
                 - path: /api/user
                   pathType: Prefix
                   backend: 
@@ -24,3 +40,10 @@ spec:
                         name: sms-auth-srv
                         port:
                             number: 80
+                # - path: /swagger/index.html
+                #   pathType: Prefix
+                #   backend:
+                #     service:
+                #         name: studentservice-srv
+                #         port:
+                #             number: 80

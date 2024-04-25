@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General"; //generate setup to the affore menetion name space when build
+
+service GrpcAttendance {
+    rpc CreateSheet (AttendanceHeaderReq) returns (CreateResp);
+    rpc GetAllAttendantSheet(GetAllAttendantSheetReq) returns (ListAttendanceHeader);
+    rpc GetStudentAttendant (GetStudentAttendantReq) returns (ListAttendanceDetail);
+    rpc MarkAttendant (AttendanceDetailReq) returns (CreateResp);
+}
+
+//message ----> data passing in and back from our servive
+message AttendanceHeaderReq {
+     int32 GradeNumber = 1;
+     string SessionName = 2;
+     int32 Term = 3;
+     int32 totalExpectedAttendance = 4;
+}
+
+message CreateResp {
+    bool res = 1;
+}
+
+message AttendanceHeaderGrpc {
+     int32 GradeNumber = 1;
+     string SessionName = 2;
+     int32 Term = 3;
+     int32 totalExpectedAttendance = 4;
+     string  AttendanceHeaderId = 5;
+}
+
+message AttendanceDetailGrpc{
+        string AttendanceHeaderId  = 1;
+        string AttendanceDate = 2;
+        string AttendanceTimeIn = 3;
+        string AttendanceTimeOut = 4;
+        string UserId = 5;
+        string UserRole = 6;
+}
+
+message ListAttendanceHeader {
+    repeated AttendanceHeaderGrpc attendance = 1;
+}
+
+message ListAttendanceDetail {
+    repeated AttendanceDetailGrpc attendance = 2;
+}
+
+message GetStudentAttendantReq {
+    string AttendanceSheetId = 1;
+    string UserId = 2;
+}
+
+message GetAllAttendantSheetReq {}
+
+message AttendanceDetailReq {
+    string AttendanceHeaderId = 1;
+    string AttendanceTimeOut = 2;
+    string UserId = 3;
+    string UserRole = 4;
+}
+
+//message UserRole { string role = 1; }
+message UserId { string Id = 1; }
+
+//message AppliactionUserResponse {
+  //  repeated GrpcApplicationUserModel users = 1;
+//}
+
