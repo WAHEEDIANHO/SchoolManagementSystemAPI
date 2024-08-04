@@ -7,6 +7,6 @@ public class LessonDTO
     public string Objectives { get; set; } = string.Empty;
     public string Transcript { get; set; } = string.Empty;
     public string MediaUrl { get; set; } = string.Empty;
-    public IFormFile? Media { get; set; }
+    // public IFormFile? Media { get; set; }
     public string TopicId { get; set; } = string.Empty;
 }

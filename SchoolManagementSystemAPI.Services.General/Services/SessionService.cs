@@ -41,11 +41,11 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
             catch (Exception e) { throw e; }
         }
 
-        public async Task<IEnumerable<SessionDTO>> getAllClass()
+        public async Task<IEnumerable<SessionDTO>> getAllClass(Dictionary<string, string>? filter = null)
         {
             try
             {
-                var result = await _repo.GetAll();
+                var result = await _repo.GetAll(filter);
                 return _mapper.Map<IEnumerable<SessionDTO>>(result);
             }
             catch (Exception e)

@@ -6,5 +6,5 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.IRepositories;
 
 public interface ITopicRepository: IGenericRepository<Topic, AppDbContext>
 {
-    Task<IEnumerable<Topic>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle);
+    Task<IEnumerable<Topic>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle, int? TermTermNumber= null);
 }

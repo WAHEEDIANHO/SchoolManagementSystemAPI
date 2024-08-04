@@ -12,16 +12,19 @@ public class TopicService: ITopicService
     private readonly ITopicRepository _topicRepository;
     private readonly ILessonRepository _lessonRepository;
     private readonly IMapper _mapper;
+    private readonly CloudinaryService _cloudinaryService;
 
     public TopicService(
         ITopicRepository topicRepository, 
         IMapper mapper,
-        ILessonRepository lessonRepository
+        ILessonRepository lessonRepository,
+        CloudinaryService cloudinaryService
         )
     {
         _topicRepository = topicRepository;
         _lessonRepository = lessonRepository;
         _mapper = mapper;
+        _cloudinaryService = cloudinaryService;
     }
     public async Task<bool> AddTopic(TopicReqDTO topic)
     {
@@ -34,9 +37,9 @@ public class TopicService: ITopicService
         return  _mapper.Map<TopicDTO>(await _topicRepository.GetByKey(id));
     }
 
-    public async Task<IEnumerable<TopicDTO>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle)
+    public async Task<IEnumerable<TopicDTO>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle, int? TermTermNumber =  null)
     {
-        return _mapper.Map<IEnumerable<TopicDTO>>(await _topicRepository.GetGradeSubjectTopics(GradeNumber, SubjectTitle));
+        return _mapper.Map<IEnumerable<TopicDTO>>(await _topicRepository.GetGradeSubjectTopics(GradeNumber, SubjectTitle, TermTermNumber));
     }
 
     public async Task<bool> UpdateTopic(TopicDTO topic)
@@ -64,7 +67,10 @@ public class TopicService: ITopicService
 
     public async Task<bool> AddLesson(LessonReqDTO lesson)
     {
+        if (lesson.Media != null)
+            lesson.MediaUrl = _cloudinaryService.UploadFile(lesson.Media); 
         await _lessonRepository.Add(_mapper.Map<Lesson>(lesson));
+        
         return true;
     }
 

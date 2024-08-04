@@ -6,7 +6,7 @@ public interface ITopicService
 {
     Task<bool> AddTopic(TopicReqDTO topic);
     Task<TopicDTO> GetTopicById(string id);
-    Task<IEnumerable<TopicDTO>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle);
+    Task<IEnumerable<TopicDTO>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle, int? TermTermNumber = null);
     Task<bool> UpdateTopic(TopicDTO topic);
     Task<bool> DeleteTopic(string id);
     Task<bool> AddLesson(LessonReqDTO lesson);

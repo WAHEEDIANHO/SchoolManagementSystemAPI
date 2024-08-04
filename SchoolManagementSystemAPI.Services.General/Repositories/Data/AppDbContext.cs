@@ -22,5 +22,12 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Webinar> Webinars { get; set; }
+        public DbSet<Discussion> Discussions { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<Note> Notes { get; set; }
+        public DbSet<Assessment> Assessments { get; set; }
+        public DbSet<LessonQuestion> LessonQuestions { get; set; }
+        public DbSet<Term> Terms { get; set; }
+        // public DbSet<Note> Notes { get; set; }
     }
 }

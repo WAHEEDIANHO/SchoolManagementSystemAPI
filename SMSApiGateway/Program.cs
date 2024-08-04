@@ -12,11 +12,23 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
+builder.Services.AddSwaggerGen();
 builder.Services.AddOcelot(builder.Configuration);
 builder.Configuration.AddJsonFile("ocelot.json");
+// builder.Services.AddSwaggerForOcelot(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI  at https://aka.ms/aspnetcore/swashbuckle
 
 var app = builder.Build();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    // app.UseSwaggerForOcelotUI(opt =>
+    // {
+    //     opt.PathToSwaggerGenerator = "/swagger/docs";
+    //
+    // });
+}
 
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();

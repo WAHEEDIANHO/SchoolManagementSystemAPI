@@ -10,7 +10,7 @@ namespace GenericRepository
     {
         Task<T> GetByKey(string id);
         Task<T> GetByKey(Guid id);
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(Dictionary<string, string>? fields);
         Task Add(T entity);
         void Delete(T entity);
         void Update(T entity);

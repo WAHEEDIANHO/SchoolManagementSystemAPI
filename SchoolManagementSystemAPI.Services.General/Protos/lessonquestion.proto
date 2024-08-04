@@ -1,0 +1,39 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "query.proto";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcLessonQuestion {
+  rpc GetAllLessonQuestion (waheedianho.protobuf.types.Query) returns (LessonQuestionGrpcList);
+  rpc CreateLessonQuestion (LessonQuestionDtoGrpc) returns (google.protobuf.Empty);
+  rpc GetLessonQuestionById (LessonQuestionId) returns (LessonQuestionGrpc);
+  rpc DeleteLessonQuestion (LessonQuestionId) returns (google.protobuf.Empty);
+}
+
+message LessonQuestionGrpcList {
+  repeated LessonQuestionGrpc LessonQuestionGrpc = 1;
+}
+
+message LessonQuestionId {
+  string Id = 1;
+}
+
+message LessonQuestionDtoGrpc {
+ string StudentId = 1;
+string Question = 2;
+string Response = 3;
+string LessonId = 4;
+int32 GradeSubjectGradeNumber = 5;
+string GradeSubjectSubjectTitle = 6;
+}
+
+message LessonQuestionGrpc {
+  string LessonQuestionId = 1;
+  string StudentId = 2;
+  string Question = 3;
+  string Response = 4;
+  string LessonId = 5;
+  int32 GradeSubjectGradeNumber = 6;
+  string GradeSubjectSubjectTitle = 7;
+}

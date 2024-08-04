@@ -21,9 +21,9 @@ public class EventService: IEventService
         return true;
     }
 
-    public async Task<IEnumerable<EventDTO>> GetEvent()
+    public async Task<IEnumerable<EventDTO>> GetEvent(Dictionary<string, string>? filter = null)
     {
-        return _mapper.Map<IEnumerable<EventDTO>>(await _repository.GetAll());
+        return _mapper.Map<IEnumerable<EventDTO>>(await _repository.GetAll(filter));
     }
 
     public async Task<EventDTO> GetEventById(string id)

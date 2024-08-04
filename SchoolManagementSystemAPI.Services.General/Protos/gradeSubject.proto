@@ -22,13 +22,13 @@ message LessonGrpc {
 	string objectives = 3;
 	string transcript = 4;
 	string mediaUrl = 5;
-	bytes media = 6;
+//	bytes media = 6;
 	string topicId = 7;
 }
 message TopicGrpc {
 	string topicId = 1;
 	string topicName = 2;
-	int32 term = 3;
+	int32 term = 3; 
 	int32 gradeNumber = 4;
 	string subjectTitle = 5;
 	string description = 6;

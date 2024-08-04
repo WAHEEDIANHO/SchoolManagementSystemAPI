@@ -13,7 +13,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services.IServices
         public IEnumerable<UserResponseDTO> GetUsersByRole(string role);
         public IEnumerable<UserResponseDTO> GetUsersByGender(string gender);
 
-        public IEnumerable<UserResponseDTO> GetAllUsers();
+        public IEnumerable<UserResponseDTO> GetAllUsers(Dictionary<string, string>? filter = null);
 
     }
 }

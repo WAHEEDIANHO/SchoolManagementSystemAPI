@@ -11,6 +11,7 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Schema
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string SessionName { get; set; }
 
-        public ICollection<Event?> Events;
+        public ICollection<Event?> Events { get; set; }
+        public ICollection<Term> Terms { get; set; }
     }
 }

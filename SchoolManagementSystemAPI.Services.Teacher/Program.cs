@@ -8,6 +8,7 @@ using SchoolManagementSystemAPI.Services.Teacher.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Teacher.Services;
 using SchoolManagementSystemAPI.Services.Teacher.Services.IServices;
 using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService;
+using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService.IGrpcService;
 using SchoolManagementSystemAPI.Services.Teacher.Utils.RabbitMQBus;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,7 +48,7 @@ var app = builder.Build();
 //if (app.Environment.IsDevelopment())
 //{
     app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwaggerUI();
 //}
 
 app.UseHttpsRedirection();

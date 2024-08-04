@@ -31,11 +31,11 @@ namespace SchoolManagementSystemAPI.Services.General.Services
             }
         }
 
-        public async Task<IEnumerable<SubjectResponseDTO>> GetAllSubjects()
+        public async Task<IEnumerable<SubjectResponseDTO>> GetAllSubjects(Dictionary<string, string>? filter = null)
         {
             try
             {
-                var result = await _subRepository.GetAll();
+                var result = await _subRepository.GetAll(filter);
                 return _mapper.Map<IEnumerable<SubjectResponseDTO>>(result);
             }
             catch(Exception e) {

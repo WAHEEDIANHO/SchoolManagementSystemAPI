@@ -44,7 +44,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
 
                 if (user == null || !isValid)
                 {       
-                    return new LoginResponseDTO() { id = "", token = "" };
+                    return null;
                 }
 
                 var roles = await _authRepository.GetRoles(user);
@@ -190,11 +190,11 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
             catch (Exception ex) { throw; };
         }
 
-        public IEnumerable<UserResponseDTO> GetAllUsers()
+        public IEnumerable<UserResponseDTO> GetAllUsers(Dictionary<string, string>? filter = null)
         {
             try
             {
-                var res = _authRepository.GetAllUsers();
+                var res = _authRepository.GetAllUsers(filter);
                 return _mapper.Map<IEnumerable<UserResponseDTO>>(res);
             }
             catch (Exception ex) { throw; };

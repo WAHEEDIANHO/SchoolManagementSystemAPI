@@ -1,0 +1,37 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "query.proto";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcNote {
+  rpc GetAllNote (waheedianho.protobuf.types.Query) returns (NoteGrpcList);
+  rpc CreateNote (NoteDtoGrpc) returns (google.protobuf.Empty);
+  rpc GetNoteById (NoteId) returns (NoteGrpc);
+  rpc DeleteNote (NoteId) returns (google.protobuf.Empty);
+}
+
+message NoteGrpcList {
+  repeated NoteGrpc NoteGrpc = 1;
+}
+
+message NoteId {
+  string Id = 1;
+}
+
+message NoteDtoGrpc {
+  string StudentId = 1;
+  string LessonId = 2;
+  string NoteContent = 3;
+  int32 GradeSubjectGradeNumber = 4;
+  string GradeSubjectSubjectTitle = 5;
+}
+
+message NoteGrpc {
+  string NoteId = 1;
+  string StudentId = 2;
+  string LessonId = 3;
+  string NoteContent = 4;
+  int32 GradeSubjectGradeNumber = 5;
+  string GradeSubjectSubjectTitle = 6;
+}

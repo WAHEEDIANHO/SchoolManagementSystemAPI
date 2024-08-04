@@ -31,7 +31,7 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
             }
         }
 
-        public async Task<bool> deleteClassbyId(int id)
+        public async Task<bool> DeleteClassbyId(int id)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
             catch (Exception e) { throw; }
         }
 
-        public async Task<bool> updateClassTeacher(GradeDTO update)
+        public async Task<bool> UpdateClassTeacher(GradeDTO update)
         {
             try
             {
@@ -58,11 +58,11 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
             catch (Exception e) { throw; }
         }
 
-        public async Task<IEnumerable<GradeDTO>> getAllClass()
+        public async Task<IEnumerable<GradeDTO>> GetAllClass(Dictionary<string, string>? filter = null)
         {
             try
             {
-                var result = await _stdCLassRepo.GetAll();
+                var result = await _stdCLassRepo.GetAll(filter);
                 return _mapper.Map<IEnumerable<GradeDTO>>(result);
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
             }
         }
 
-        public async Task<GradeDTO> getClassByKey(int GradeNumber)
+        public async Task<GradeDTO> GetClassByKey(int GradeNumber)
         {
             try
             {

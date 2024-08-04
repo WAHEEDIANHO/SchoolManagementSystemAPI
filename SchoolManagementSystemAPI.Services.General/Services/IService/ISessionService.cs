@@ -4,7 +4,7 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
 {
     public interface ISessionService
     {
-        Task<IEnumerable<SessionDTO>> getAllClass();
+        Task<IEnumerable<SessionDTO>> getAllClass(Dictionary<string, string>? filter = null);
         Task<SessionDTO> getSessionById(string id);
         Task<SessionDTO> deleteSessionbyId(string id);
         Task<bool> AddClass(SessionDTO schSession);

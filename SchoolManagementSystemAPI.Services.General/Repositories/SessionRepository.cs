@@ -17,7 +17,15 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories
 
         public async Task<Session> GetById(string SessionName)
         {
-            return await _context.Set<Session>().FirstAsync(x => x.SessionName == SessionName);
+            return await _context.Set<Session>().Include(x => x.Terms).FirstAsync(x => x.SessionName == SessionName);
+        }
+        
+
+        public async Task<IEnumerable<Session>> GetAll(Dictionary<string, string>? fields)
+        {
+           return await _context.Set<Session>()
+               .Include(x => x.Terms)
+               .ToListAsync();
         }
     }
 }

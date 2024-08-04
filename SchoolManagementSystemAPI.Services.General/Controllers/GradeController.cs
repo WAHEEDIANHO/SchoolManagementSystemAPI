@@ -6,7 +6,7 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 namespace SchoolManagementSystemAPI.Services.General.Controllers
 {
     [ApiController]
-    [Route("/api/stdclass")]
+    [Route("[controller]/[action]")]
     public class GradeController : ControllerBase
     {
         private readonly IGradeService _service;
@@ -19,11 +19,11 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> GetAll()
+        public async Task<ActionResult<ResponseDTO>> GetAllAvailableGrade()
         {
             try
             {
-                _response.Result = await _service.getAllClass();
+                _response.Result = await _service.GetAllClass();
                 return Ok(_response);
             }
             catch (Exception ex) {
@@ -34,7 +34,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> Create([FromBody] GradeDTO stdClassDTO)
+        public async Task<ActionResult<ResponseDTO>> CreateGrade([FromBody] GradeDTO stdClassDTO)
         {
             try
             {
@@ -49,12 +49,12 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
             }
         }
 
-        [HttpGet("getById/{GradeNumber}")]
-        public async Task<ActionResult<ResponseDTO>> GetById(int GradeNumber)
+        [HttpGet("{GradeNumber}")]
+        public async Task<ActionResult<ResponseDTO>> GetGradeById(int GradeNumber)
         {
             try
             {
-                _response.Result = await _service.getClassByKey(GradeNumber);
+                _response.Result = await _service.GetClassByKey(GradeNumber);
                 return Ok(_response);
             }
             catch (Exception ex) {
@@ -69,7 +69,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         {
             try
             {
-                if(await _service.updateClassTeacher(update))
+                if(await _service.UpdateClassTeacher(update))
                 {
                     _response.Result = "Grade Teacher updated!!!";
                     return Ok(_response);
@@ -86,11 +86,11 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ResponseDTO>> Delete(int GradeNumber)
+        public async Task<ActionResult<ResponseDTO>> DeleteGrade(int GradeNumber)
         {
             try
             {
-                if(await _service.deleteClassbyId(GradeNumber))
+                if(await _service.DeleteClassbyId(GradeNumber))
                 {
                     _response.Result = "Deleted successfully";
                     return Ok(_response);

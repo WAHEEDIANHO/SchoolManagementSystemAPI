@@ -6,7 +6,7 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 
 namespace SchoolManagementSystemAPI.Services.General.Controllers;
 
-[Route("topic")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class TopicController: ControllerBase
 {
@@ -34,13 +34,13 @@ public class TopicController: ControllerBase
         }
     }
 
-    [HttpGet("subject-topics")]
+    [HttpGet]
     public async Task<ActionResult<ResponseDTO>> GetSubjectTopics([FromQuery] int GradeNumber,
-        [FromQuery] string SubjectTitle)
+        [FromQuery] string SubjectTitle, [FromQuery] int? TermTermNumber)
     {
         try
         {
-           response.Result = await _service.GetGradeSubjectTopics(GradeNumber, SubjectTitle);
+           response.Result = await _service.GetGradeSubjectTopics(GradeNumber, SubjectTitle, TermTermNumber);
            return Ok(response);
         }
         catch (Exception e)
@@ -104,7 +104,7 @@ public class TopicController: ControllerBase
      * Lesson Session *
      *******************************************/
 
-    [HttpGet("lesson")]
+    [HttpGet]
     public async Task<ActionResult<ResponseDTO>> GetAllTopicLessons([FromQuery] string topicId)
     {
         try
@@ -119,7 +119,7 @@ public class TopicController: ControllerBase
             return StatusCode(500, response);
         }
     }
-    [HttpGet("lesson/{lessonId}")]
+    [HttpGet("{lessonId}")]
     public async Task<ActionResult<ResponseDTO>> GetLessonById(string lessonId)
     {
         try
@@ -135,7 +135,7 @@ public class TopicController: ControllerBase
         }
     }
 
-    [HttpPost("lesson")]
+    [HttpPost]
     public async Task<ActionResult<ResponseDTO>> AddLessonToTopic([FromForm] LessonReqDTO lessonReq)
     {
         try
@@ -151,7 +151,7 @@ public class TopicController: ControllerBase
         }
     }
 
-    [HttpPut("lesson")]
+    [HttpPut]
     public async Task<ActionResult<ResponseDTO>> UpdateLesson([FromForm] LessonDTO lesson)
     {
         try
@@ -167,7 +167,7 @@ public class TopicController: ControllerBase
         }
     }
     
-    [HttpDelete("lesson/{lessonId}")]
+    [HttpDelete("{lessonId}")]
     public async Task<ActionResult<ResponseDTO>> DeleteLesson(string lessonId)
     {
         try

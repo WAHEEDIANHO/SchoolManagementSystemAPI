@@ -11,6 +11,12 @@ namespace SchoolManagementSystemAPI.Services.Student.Model.DTO
             ClassId = std.ClassId;
             SessionId = std.SessionId;
         }
+        public StudentDTO(StudentSchema std) {
+
+            AdmissionNo = std.AdmissionNo;
+            ClassId = std.ClassId;
+            SessionId = std.SessionId;
+        }
         public StudentDTO() { }
         public  string AdmissionNo { get; set; }
         public  int ClassId { get; set; }

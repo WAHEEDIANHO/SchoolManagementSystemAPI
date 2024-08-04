@@ -18,5 +18,6 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Schema
         public string? SubjectTeacher { get; set; }
 
         public ICollection<Topic>? Topics { get; set; }
+        public ICollection<Discussion>? Discussions { get; set; }
     }
 }

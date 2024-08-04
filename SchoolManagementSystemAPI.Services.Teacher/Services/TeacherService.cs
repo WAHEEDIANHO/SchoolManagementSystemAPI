@@ -6,6 +6,7 @@ using SchoolManagementSystemAPI.Services.Teacher.Repositories;
 using SchoolManagementSystemAPI.Services.Teacher.Repositories.IRepositories;
 using SchoolManagementSystemAPI.Services.Teacher.Services.IServices;
 using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService;
+using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService.IGrpcService;
 
 namespace SchoolManagementSystemAPI.Services.Teacher.Services
 {
@@ -33,7 +34,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
             _config = config;
             _userService = userService;
             _grpcApplicationUser = grpcApplicationUser;
-
+            
             hostname = _config.GetValue<string>("RabbitmqConn:Host");
             userName = _config.GetValue<string>("RabbitmqConn:Username");
             passWord = _config.GetValue<string>("RabbitmqConn:Password");
@@ -86,6 +87,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
                 if (st != null)
                 {
                     UserResponseDTO user = _mapper.Map<UserResponseDTO>(_grpcApplicationUser.GetTeacherById(id)); ;
+                    if (user == null) return new TeacherDTO(st);
                     return new TeacherDTO(user, st);
                 }
                 else return new();
@@ -95,7 +97,7 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Services
                 throw;
             }
         }
-
+        
         public Task<bool> RegTeacher(MsgRegTeacherDTO req)
         {
             throw new NotImplementedException();

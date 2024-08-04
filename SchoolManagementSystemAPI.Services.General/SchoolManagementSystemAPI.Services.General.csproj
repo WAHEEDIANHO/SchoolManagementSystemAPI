@@ -4,12 +4,17 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+
+	</PropertyGroup>
+	<PropertyGroup>
+		<ProtoRoot>Protos</ProtoRoot>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-		<PackageReference Include="Grpc.AspNetCore" Version="2.60.0" />
+		<PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+		<PackageReference Include="Grpc.AspnetCore" Version="2.62.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.15" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.15" />
@@ -24,7 +29,8 @@
 		</PackageReference>
 		<PackageReference Include="RestSharp" Version="110.2.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="Waheedianho.GenericRepository" Version="1.0.1" />
+		<PackageReference Include="Waheedianho.GenericRepository" Version="1.0.2" />
+		<PackageReference Include="Waheedianho.Protobuf.Types" Version="1.0.1" GeneratePathProperty="true" />
 	</ItemGroup>
 
 	<!--<ItemGroup>
@@ -32,15 +38,12 @@
 	    <GrpcService>Server</GrpcService>
 	  </None>
 	</ItemGroup>-->
+<!--	<ItemGroup>-->
+<!--		<Protobuf Include="@(ProtoBuf)" ProtoRoot="$(ProtoRoot)" />-->
+<!--	</ItemGroup>-->
 
 	<ItemGroup>
-		<Protobuf Include="Protos\attendance.proto" GrpcService="Server" />
-		<Protobuf Include="Protos\grade.proto" GrpcService="Server" />
-		<Protobuf Include="Protos\session.proto" GrpcService="Server" />
-		<Protobuf Include="Protos\gradeSubject.proto" GrpcService="Server" />
-		<Protobuf Include="Protos\subject.proto" GrpcService="Server" />
-		<Protobuf Include="Protos\notification.proto" GrpcService="Server" />
-		<Protobuf Include="Protos\webinar.proto" GrpcService="Server" />
+	  	<Protobuf Include="Protos\*.proto" GrpcServices="Server" AdditionalImportDirs="$(PkgWaheedianho_Protobuf_Types)\content\Protos" />
 	</ItemGroup>
-
+	
 </Project>

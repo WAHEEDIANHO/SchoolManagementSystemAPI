@@ -20,8 +20,8 @@ namespace SchoolManagementSystemAPI.Services.General.GrpcController
         public override Task<CreateResp> CreateSheet(AttendanceHeaderReq request, ServerCallContext context)
         {
             CreateResp resp = new();
-            AttendanceHeaderReqDTO attendanceHeaderReq = _mapper.Map<AttendanceHeaderReqDTO>(request);
-            resp.Res = _service.CreateGradeAttendanceSheet(attendanceHeaderReq).GetAwaiter().GetResult();
+            CreateAttendanceSheet createAttendanceHeaderReq = _mapper.Map<CreateAttendanceSheet>(request);
+            resp.Res = _service.CreateGradeAttendanceSheet(createAttendanceHeaderReq).GetAwaiter().GetResult();
             return Task.FromResult(resp);
         }
 

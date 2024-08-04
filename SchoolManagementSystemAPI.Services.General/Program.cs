@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SchoolManagementSystemAPI.Services.General;
+using SchoolManagementSystemAPI.Services.General.Extension;
 using SchoolManagementSystemAPI.Services.General.GrpcController;
 using SchoolManagementSystemAPI.Services.General.Repositories;
 using SchoolManagementSystemAPI.Services.General.Repositories.Data;
@@ -10,63 +11,17 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(opt =>
-{
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-IMapper mapper = MapperConfig.registerMap().CreateMapper();
-builder.Services.AddSingleton(mapper);
-builder.Services.AddGrpc();
-
-builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-builder.Services.AddScoped<ISubjectServices,  SubjectService>();
-
-builder.Services.AddScoped<IGradeRepository, GradeRepository>();
-builder.Services.AddScoped<IGradeService, GradeService>();
-
-builder.Services.AddScoped<ISessionRepository, SessionRepository>();
-builder.Services.AddScoped<ISessionService, SessionService>();
-
-builder.Services.AddScoped<IClassSubjectRepository, ClassSubjectRepository>();
-builder.Services.AddScoped<IClassSubjectService, ClassSubjectService>();
-
-builder.Services.AddScoped<IAttendanceHeaderRepository, AttendanceHeaderRepository>();
-builder.Services.AddScoped<IAttendanceDetailRepository, AttendanceDetailRepository>();
-builder.Services.AddScoped<IAttendanceService, AttendanceService>();
-
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-
-// Topic
-builder.Services.AddScoped<ITopicRepository, TopicRepository>();
-builder.Services.AddScoped<ITopicService, TopicService>();
-
-//Lessom
-builder.Services.AddScoped<ILessonRepository, LessonRepository>();
-
-//Event
-builder.Services.AddScoped<IEventRepository, EventRepository>();
-builder.Services.AddScoped<IEventService, EventService>();
-
-//Webinar
-builder.Services.AddScoped<IWebinarRepository, WebinarRepository>();
-builder.Services.AddScoped<IWebinarService, WebinarService>();
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.AddBuilderServicesExtention();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    // app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -79,6 +34,7 @@ app.MapGrpcService<SessionGrpcController>();
 app.MapGrpcService<SubjectGrpcController>();
 app.MapGrpcService<NotificationGrpcController>();
 app.MapGrpcService<WebinarGrpcController>();
+app.MapGrpcService<AssessmentGrpcController>();
 ApplyMigration();
 app.Run();
 

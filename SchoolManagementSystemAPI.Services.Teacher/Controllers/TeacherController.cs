@@ -3,23 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolManagementSystemAPI.Services.Teacher.Model.DTOs;
 using SchoolManagementSystemAPI.Services.Teacher.Services.IServices;
 using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService;
+using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService.IGrpcService;
 using SchoolManagementSystemAPI.Services.TeacherAPI;
 
 namespace SchoolManagementSystemAPI.Services.Teacher.Controllers
 {
     [ApiController]
-    [Route("api/teacher")]
+    [Route("[action]")]
     public class TeacherController : ControllerBase
     {
         private readonly ResponseDTO response;
         private readonly ITeacherService _service;
-        private readonly IGrpcApplicationUserClientService _grpcService;
 
-        public TeacherController(ITeacherService service, IGrpcApplicationUserClientService grpcService)
+        public TeacherController(
+            ITeacherService service, 
+            IGrpcApplicationUserClientService grpcUserService
+            )
         {
             response = new ResponseDTO();
             _service = service;
-            _grpcService = grpcService;
         }
 
         [Authorize(Roles = "TEACHER, STUDENT")]
@@ -79,5 +81,6 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Controllers
                 return StatusCode(500, response);
             }
         }
+        
     }
 }

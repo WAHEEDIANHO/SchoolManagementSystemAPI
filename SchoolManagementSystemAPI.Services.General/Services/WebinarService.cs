@@ -20,9 +20,9 @@ public class WebinarService: IWebinarService
     }
 
 
-    public async Task<IEnumerable<Webinar>> GetAllWebinars()
+    public async Task<IEnumerable<Webinar>> GetAllWebinars(Dictionary<string, string>? filter = null)
     {
-        var webinars = await _repository.GetAll();
+        var webinars = await _repository.GetAll(filter);
         return _mapper.Map<IEnumerable<Webinar>>(webinars);
     }
 
@@ -32,9 +32,9 @@ public class WebinarService: IWebinarService
        await _repository.Add(newWebinar);
     }
 
-    public async Task RemoveWebinar(string webinarId)
+    public async Task RemoveWebinar(string webinarId, Dictionary<string, string>? filter = null)
     {
-        IEnumerable<Webinar> webinars = await _repository.GetAll();
+        IEnumerable<Webinar> webinars = await _repository.GetAll(filter);
         if (webinars != null)
         {
             Webinar delWebinar = webinars.First(u => u.WebinarId == webinarId);

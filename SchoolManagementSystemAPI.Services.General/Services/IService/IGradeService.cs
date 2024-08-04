@@ -4,10 +4,10 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
 {
     public interface IGradeService
     {
-        Task<IEnumerable<GradeDTO>> getAllClass();
-        Task<GradeDTO> getClassByKey(int id);
-        Task<bool> deleteClassbyId(int id);
+        Task<IEnumerable<GradeDTO>> GetAllClass(Dictionary<string, string>? filter = null);
+        Task<GradeDTO> GetClassByKey(int id);
+        Task<bool> DeleteClassbyId(int id);
         Task<bool> AddClass(GradeDTO stdClassDTO);
-        Task<bool> updateClassTeacher(GradeDTO update);
+        Task<bool> UpdateClassTeacher(GradeDTO update);
     }
 }

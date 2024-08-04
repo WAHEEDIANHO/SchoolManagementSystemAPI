@@ -1,0 +1,41 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "query.proto";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcAssignment {
+  rpc GetAllAssignment (waheedianho.protobuf.types.Query) returns (AssignmentGrpcList);
+  rpc CreateAssignment (AssignmentDtoGrpc) returns (google.protobuf.Empty);
+  rpc GetAssignmentById (AssignmentId) returns (AssignmentGrpc);
+  rpc DeleteAssignment (AssignmentId) returns (google.protobuf.Empty);
+}
+
+message AssignmentGrpcList {
+  repeated AssignmentGrpc AssignmentGrpc = 1;
+}
+
+message AssignmentId {
+  string Id = 1;
+}
+
+message AssignmentDtoGrpc {
+  string AssignmentContent = 1;
+  string Deadline = 2;
+  int32 DeadlineHour = 3;
+  int32 DeadlineMinute = 4;
+  string LessonId = 5;
+  int32 GradeSubjectGradeNumber = 6;
+  string GradeSubjectSubjectTitle = 7;
+}
+
+message AssignmentGrpc {
+  string AssignmentId = 1;
+  string AssignmentContent = 2;
+  string Deadline = 3; 
+  int32 DeadlineHour = 4;
+  int32 DeadlineMinute = 5;
+  string LessonId = 6;
+  int32 GradeSubjectGradeNumber = 7;
+  string GradeSubjectSubjectTitle = 8;
+}

@@ -1,0 +1,70 @@
+{
+  "SwaggerEndpoints":[
+    {
+      "Key": "apigateway",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "ApiGateway",
+          "Version": "1.0",
+          "Url": "https://localhost:5000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "user",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "SchoolManagementSystemAPI.Services.AuthAPI",
+          "Version": "1.0",
+          "Url": "https://localhost:8000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "student",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "SchoolManagementSystemAPI.Services.Student",
+          "Version": "1.0",
+          "Url": "https://localhost:8003/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "teacher",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "SchoolManagementSystemAPI.Services.Teacher",
+          "Version": "1.0",
+          "Url": "https://localhost:8004/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "parent",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "SchoolManagementSystemAPI.Services.Parent",
+          "Version": "1.0",
+          "Url": "https://localhost:8001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "utils", 
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "SchoolManagementSystemAPI.Services.Utils",
+          "Version": "1.0",
+          "Url": "https://localhost:8002/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

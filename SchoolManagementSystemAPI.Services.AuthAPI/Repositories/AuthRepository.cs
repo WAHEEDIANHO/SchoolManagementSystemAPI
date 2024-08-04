@@ -5,6 +5,7 @@ using SchoolManagementSystemAPI.Services.AuthAPI.Model.DTOs;
 using SchoolManagementSystemAPI.Services.AuthAPI.Repositories.Data;
 using SchoolManagementSystemAPI.Services.AuthAPI.Repositories.IRepositories;
 using System.Data;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
 {
@@ -107,10 +108,32 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories
           return _db.ApplicationUsers.Where(u => u.Role.ToLower() == role.ToLower());
         }
 
-        public IEnumerable<ApplicationUser> GetAllUsers()
+        public IEnumerable<ApplicationUser> GetAllUsers(Dictionary<string, string>? filter = null)
         {
-            return _db.ApplicationUsers.ToList();
+            try
+            {
+                var query = _db.ApplicationUsers.AsQueryable();
+                if (filter != null)
+                {           
+                    foreach (var field in filter.Keys)
+                    {
+                        query = query.Where(x => EF.Property<string>(x, field) == filter[field]);
+                    }
+                    return query.ToList();
+                }
+                return query.ToList();
+            }catch(Exception ex)
+            {
+                if (ex is InvalidOperationException)
+                {
+                    return Enumerable.Empty<ApplicationUser>();
+                }
+                throw;
+            }
         }
+        // {
+        //     return _db.ApplicationUsers.ToList();
+        // }
 
         public IEnumerable<ApplicationUser> GetUsersbyGender(string gender)
         {

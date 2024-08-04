@@ -12,6 +12,15 @@ namespace SchoolManagementSystemAPI.Services.Teacher.Model.DTOs
             LevelOfStudy = teacher.LevelOfStudy;
             RegId = teacher.RegId;
         }
+        
+        public TeacherDTO(TeacherSchema teacher) {
+        
+            AppointmentDate = teacher.AppointmentDate;
+            Grade = teacher.Grade;
+            CourseOfStudy = teacher.CourseOfStudy;
+            LevelOfStudy = teacher.LevelOfStudy;
+            RegId = teacher.RegId;
+        }
         public TeacherDTO() { }
         public DateTime AppointmentDate { get; set; }
         public int Grade { get; set; }

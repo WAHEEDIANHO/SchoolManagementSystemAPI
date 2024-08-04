@@ -1,0 +1,49 @@
+﻿syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "query.proto";
+//import "query.proto";
+
+option csharp_namespace = "SchoolManagementSystemAPI.Services.General";
+
+service GrpcAssessment {
+  rpc GetAllAssessment (waheedianho.protobuf.types.Query) returns (AssessmentGrpcList);
+  rpc CreateAssessment (AssessmentDtoGrpc) returns (google.protobuf.Empty);
+  rpc GetAssessmentById (AssessmentId) returns (AssessmentGrpc);
+  rpc DeleteAssessment (AssessmentId) returns (google.protobuf.Empty);
+}
+
+
+message AssessmentGrpcList {
+  repeated AssessmentGrpc AssessmentGrpc = 1;
+}
+
+message AssessmentId {
+  string Id = 1;
+}
+
+message AssessmentDtoGrpc {
+  string Title = 1;
+  string Description =2;
+  string LessonId = 3;
+  string AssessmentContent= 4;
+  int32 Duration = 5;
+  string DateSchedule = 6;
+  int32 HourSchedule = 7;
+  int32 MinuteSchedule = 8;
+  int32 GradeSubjectGradeNumber = 9;
+  string GradeSubjectSubjectTitle = 10;
+}
+
+message AssessmentGrpc {
+  string AssessmentId = 1;
+  string Title = 2;
+  string Description =3;
+  string LessonId = 4;
+  string AssessmentContent= 5;
+  int32 Duration = 6;
+  string DateSchedule = 7;
+  int32 HourSchedule = 8;
+  int32 MinuteSchedule = 9;
+  int32 GradeSubjectGradeNumber = 10;
+  string GradeSubjectSubjectTitle = 11;
+}

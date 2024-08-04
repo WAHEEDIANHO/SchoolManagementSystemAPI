@@ -8,7 +8,7 @@ using SchoolManagementSystemAPI.Services.AuthAPI.Services.IServices;
 
 namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
 {
-    [Route("api/user")]
+    [Route("/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             _responseDTO = new ResponseDTO();
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<ActionResult<LoginResponseDTO>> Login(LoginRequestDTO loginRequest)
         {
             try
@@ -42,7 +42,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
 
 
         [Authorize]
-        [HttpGet("current-user")]
+        [HttpGet]
         public async Task<ActionResult<ResponseDTO>> GetCurrentUser()
         {
             try

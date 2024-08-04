@@ -5,7 +5,7 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 
 namespace SchoolManagementSystemAPI.Services.General.Controllers
 {
-    [Route("api/attendance")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class AttendanceController : ControllerBase
     {
@@ -19,12 +19,12 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
             response = new ResponseDTO();
         }
 
-        [HttpPost("create-sheet")]
-        public async Task<ActionResult<ResponseDTO>> CreateSheet([FromBody] AttendanceHeaderReqDTO attendanceHeader)
+        [HttpPost()]
+        public async Task<ActionResult<ResponseDTO>> CreateSheet([FromBody] CreateAttendanceSheet createAttendanceHeader)
         {
             try
             {
-                response.Result = await _service.CreateGradeAttendanceSheet(attendanceHeader); 
+                response.Result = await _service.CreateGradeAttendanceSheet(createAttendanceHeader); 
                 return Ok(response);
             }catch (Exception ex) {
                 statusCode = 500;
@@ -34,7 +34,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
             }
         }
 
-        [HttpGet("sheet")]
+        [HttpGet]
         public async Task<ActionResult<ResponseDTO>> GetAllAttendantSheet()
         {
             try
@@ -51,7 +51,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
             }
         }
 
-        [HttpGet("student/{userId}")]
+        [HttpGet("{userId}")]
         public async Task<ActionResult<ResponseDTO>> GetStudentAttendant([FromQuery] string attendanceSheetId, string userId)
         {
             try

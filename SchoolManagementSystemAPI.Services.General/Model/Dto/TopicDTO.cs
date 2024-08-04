@@ -8,6 +8,8 @@ public class TopicDTO
     public int GradeNumber { get; set; }
     public string SubjectTitle { get; set; } = string.Empty;
     public string? Description { get; set; } = string.Empty;
+    public string TermSessionName { get; set; }
+    public int TermTermNumber { get; set; }
         
     public ICollection<LessonDTO>? Lessons { get; set; }
         

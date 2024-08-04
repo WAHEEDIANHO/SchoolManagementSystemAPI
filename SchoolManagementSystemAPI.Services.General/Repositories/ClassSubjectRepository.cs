@@ -14,7 +14,8 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories
         public IEnumerable<GradeSubject> GetClassSubject(int GradeNumber)
         {
             //_context.Database.BeginTransaction
-             return _context.Set<GradeSubject>().Include(x => x.Topics)                            //.Include(x => x.Grade)
+             return _context.Set<GradeSubject>()
+                 .Include(x => x.Topics)!.ThenInclude(t => t.Lessons)                           //.Include(x => x.Grade)
                  .Where(x => x.Grade.GradeNumber == GradeNumber);
         }
 

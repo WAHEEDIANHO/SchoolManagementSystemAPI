@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using SchoolManagementSystemAPI.Services.General.Model.Dto;
+using SchoolManagementSystemAPI.Services.Student.Model.DTO;
 
 namespace SchoolManagementSystemAPI.Services.Student.Model.Dto
 {

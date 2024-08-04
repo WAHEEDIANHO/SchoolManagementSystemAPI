@@ -21,7 +21,7 @@ namespace SchoolManagementSystemAPI.Services.General.GrpcController
         public override Task<GradeActionState> ChangeGradeTeacher(GradeDataGrpc request, ServerCallContext context)
         {
            GradeActionState proState = new();
-           proState.Resp = _service.updateClassTeacher(_mapper.Map<GradeDTO>(request)).GetAwaiter().GetResult();
+           proState.Resp = _service.UpdateClassTeacher(_mapper.Map<GradeDTO>(request)).GetAwaiter().GetResult();
            return Task.FromResult(proState);
         }
 
@@ -35,21 +35,21 @@ namespace SchoolManagementSystemAPI.Services.General.GrpcController
         public override Task<GradeActionState> DeleteGrade(ResourceId request, ServerCallContext context)
         {
             GradeActionState prosState = new();
-            prosState.Resp = _service.deleteClassbyId(int.Parse(request.Id)).GetAwaiter().GetResult();  
+            prosState.Resp = _service.DeleteClassbyId(int.Parse(request.Id)).GetAwaiter().GetResult();  
             return Task.FromResult(prosState);
         }
 
         public override Task<ListGrade> GetAllGrade(GradeEmpty request, ServerCallContext context)
         {
             ListGrade resp = new();
-            var grades =_service.getAllClass().GetAwaiter().GetResult();  
+            var grades =_service.GetAllClass().GetAwaiter().GetResult();  
             foreach(var grade in grades) { resp.Grades.Add(_mapper.Map<GradeDataGrpc>(grade));}
             return Task.FromResult(resp);
         }
 
         public override Task<GradeDataGrpc> GetByGradeId(ResourceId request, ServerCallContext context)
         {
-            var res = _service.getClassByKey(int.Parse(request.Id)).GetAwaiter().GetResult();
+            var res = _service.GetClassByKey(int.Parse(request.Id)).GetAwaiter().GetResult();
             return Task.FromResult(_mapper.Map<GradeDataGrpc>(res));
         }
     }

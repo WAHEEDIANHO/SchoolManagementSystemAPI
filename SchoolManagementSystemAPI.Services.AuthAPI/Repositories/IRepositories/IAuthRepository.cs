@@ -13,7 +13,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Repositories.IRepositories
 
         public IEnumerable<ApplicationUser> GetUsersbyGender(string gender);
 
-        public IEnumerable<ApplicationUser> GetAllUsers();
+        public IEnumerable<ApplicationUser> GetAllUsers(Dictionary<string, string>? filter = null);
 
         public Task<bool> CheckPassword(ApplicationUser user,string password);
         public Task<IList<string>> GetRoles(ApplicationUser user);

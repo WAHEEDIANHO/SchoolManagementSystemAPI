@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Grpc.Net.Client;
 using SchoolManagementSystemAPI.Services.Teacher.Model.DTOs;
+using SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService.IGrpcService;
 using SchoolManagementSystemAPI.Services.TeacherAPI;
 
 namespace SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService

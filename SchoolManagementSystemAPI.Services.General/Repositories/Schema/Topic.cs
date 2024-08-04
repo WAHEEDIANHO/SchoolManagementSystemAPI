@@ -13,7 +13,9 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Schema
         [Required]
         public string TopicName { get; set; } = string.Empty;
         [Required]
-        public int Term { get; set; }
+        public string TermSessionName { get; set; }
+        [Required]
+        public int TermTermNumber { get; set; }
         [Required]
         public int GradeSubjectGradeNumber { get; set; }
         [Required]
@@ -25,5 +27,6 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Schema
         //[ForeignKey("GradeSubjectId")]
         public GradeSubject? GradeSubject { get; set; }
         public ICollection<Webinar> Webinars { get; set; }
+        public Term? Term { get; set; }
     }
 }

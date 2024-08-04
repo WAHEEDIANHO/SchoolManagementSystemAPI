@@ -14,12 +14,12 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories
 
         public AttendanceHeaderRepository(AppDbContext context) : base(context) { _context = context; }
 
-        public async Task<AttendanceHeader> GetSpecifyAttendanceSheet(AttendanceHeaderReqDTO attendanceHeaderReq)
+        public async Task<AttendanceHeader> GetSpecifyAttendanceSheet(CreateAttendanceSheet createAttendanceHeaderReq)
         {
            return await _context.Set<AttendanceHeader>().Include(x => x.AttendanceDetails)
-                .FirstAsync(u => (u.SessionName == attendanceHeaderReq.SessionName && 
-                u.GradeNumber == attendanceHeaderReq.GradeNumber &&
-                u.Term == attendanceHeaderReq.Term) );
+                .FirstAsync(u => (u.SessionName == createAttendanceHeaderReq.SessionName && 
+                u.GradeNumber == createAttendanceHeaderReq.GradeNumber &&
+                u.Term == createAttendanceHeaderReq.Term) );
         }
 
         public async Task<IEnumerable<AttendanceHeader>> GetAll()

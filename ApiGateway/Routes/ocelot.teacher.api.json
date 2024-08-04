@@ -1,0 +1,17 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "SwaggerKey": "teacher",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/teacher/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    }
+  ]
+}

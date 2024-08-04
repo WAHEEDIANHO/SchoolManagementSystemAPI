@@ -14,11 +14,15 @@ public class TopicRepository: GenericRepository<Topic, AppDbContext>, ITopicRepo
         _context = context;
     }
 
-    public async Task<IEnumerable<Topic>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle)
+    public async Task<IEnumerable<Topic>> GetGradeSubjectTopics(int GradeNumber, string SubjectTitle, int? TermTermNumber = null)
     {
-        return await  _context.Set<Topic>().Include(x => x.Lessons)
-            .Where(x => x.GradeSubjectGradeNumber == GradeNumber && x.GradeSubjectSubjectTitle == SubjectTitle)
-            .ToListAsync();
+        return TermTermNumber != null ? 
+            await  _context.Set<Topic>().Include(x => x.Lessons)
+            .Where(x => x.GradeSubjectGradeNumber == GradeNumber && x.GradeSubjectSubjectTitle == SubjectTitle && x.TermTermNumber == TermTermNumber)
+            .ToListAsync() :
+            await  _context.Set<Topic>().Include(x => x.Lessons)
+                .Where(x => x.GradeSubjectGradeNumber == GradeNumber && x.GradeSubjectSubjectTitle == SubjectTitle)
+                .ToListAsync();
     }
 
     public async Task<Topic> GetByKey(string id)

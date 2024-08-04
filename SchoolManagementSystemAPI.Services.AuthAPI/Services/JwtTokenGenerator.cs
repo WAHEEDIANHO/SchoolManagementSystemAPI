@@ -26,7 +26,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Services
             {
                 new Claim(JwtRegisteredClaimNames.Email, applicationUser.Email),
                 new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Id),
-                //new Claim(JwtRegisteredClaimNames.Name, applicationUser.Nam)
+                new Claim(JwtRegisteredClaimNames.Name, $"{applicationUser.LastName} {applicationUser.FirstName}"),
             };
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));

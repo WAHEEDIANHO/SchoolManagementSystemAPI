@@ -7,7 +7,7 @@ using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService.IGrpcClientSe
 
 namespace SchoolManagementSystemAPI.Services.Student.Controllers;
 [ApiController]
-[Route("api/student/webinar")]
+[Route("[action]")]
 public class WebinarController : ControllerBase
 {
     private readonly ResponseDTO response;
@@ -37,7 +37,7 @@ public class WebinarController : ControllerBase
     }
     
     [Authorize(Roles = UserRoles.STUDENT)]
-    [HttpGet("today")]
+    [HttpGet]
     public async Task<ActionResult<ResponseDTO>> GetTodayWebinar([FromQuery] int GradeNumber)
     {
         try

@@ -7,7 +7,7 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 namespace SchoolManagementSystemAPI.Services.General.Controllers
 {
     [ApiController]
-    [Route("/api/subject")]
+    [Route("[controller]/[action]")]
     public class SubjectController : ControllerBase
     {
         private readonly ISubjectServices _services;
@@ -20,7 +20,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> GetAll()
+        public async Task<ActionResult<ResponseDTO>> GetAllAvailableSubject()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> Create([FromBody] SubjectRequestDTO subject)
+        public async Task<ActionResult<ResponseDTO>> CreateSubject([FromBody] SubjectRequestDTO subject)
         {
             try
             {
@@ -49,8 +49,8 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
             }
         }
 
-       [HttpGet("getById")]
-        public async Task<ActionResult<ResponseDTO>> GetById([FromQuery] string id)
+       [HttpGet]
+        public async Task<ActionResult<ResponseDTO>> GetBySubjectId([FromQuery] string id)
         {
             try {
                 _response.Result = await _services.GetSubjectByID(id);
@@ -64,7 +64,7 @@ namespace SchoolManagementSystemAPI.Services.General.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ResponseDTO>> DeleteById([FromQuery] string id)
+        public async Task<ActionResult<ResponseDTO>> DeleteSubject([FromQuery] string id)
         {
             try
             {

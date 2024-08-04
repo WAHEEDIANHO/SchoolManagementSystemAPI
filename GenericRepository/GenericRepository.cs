@@ -25,9 +25,31 @@ namespace GenericRepository
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll(Dictionary<string, string>? fields)
         {
-            return await _context.Set<T>().ToListAsync();
+            try
+            {
+                var query = _context.Set<T>().AsQueryable();
+                if (fields != null)
+                {
+                    foreach (var field in fields.Keys)
+                    {
+                        query = query.Where(x => EF.Property<string>(x, field) == fields[field]);
+                    }
+
+                    return await query.ToListAsync();
+                }
+
+                return await _context.Set<T>().ToListAsync();
+            }
+            catch(Exception ex)
+            {
+                if (ex is InvalidOperationException)
+                {
+                    return Enumerable.Empty<T>();
+                }
+                throw;
+            }
         }
 
         public async Task<T> GetByKey(string id)

@@ -5,7 +5,7 @@ using SchoolManagementSystemAPI.Services.Parent.Services.IServices;
 namespace SchoolManagementSystemAPI.Services.Parent.Controllers
 {
     [ApiController]
-    [Route("api/parent")]
+    [Route("[action]")]
     public class ParentController : ControllerBase
     {
         private readonly ResponseDTO response;

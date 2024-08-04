@@ -12,8 +12,8 @@ using SchoolManagementSystemAPI.Services.General.Repositories.Data;
 namespace SchoolManagementSystemAPI.Services.General.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240412053210_general-update")]
-    partial class generalupdate
+    [Migration("20240611185551_general-init-db")]
+    partial class generalinitdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,92 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Assessment", b =>
+                {
+                    b.Property<string>("AssessmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssessmentContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateSchedule")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GradeSubjectGradeNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeSubjectSubjectTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("HourSchedule")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LessonId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("MinuteSchedule")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AssessmentId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle");
+
+                    b.ToTable("Assessments");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Assignment", b =>
+                {
+                    b.Property<string>("AssignmentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssignmentContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DeadlineHour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DeadlineMinute")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GradeSubjectGradeNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeSubjectSubjectTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LessonId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AssignmentId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle");
+
+                    b.ToTable("Assignments");
+                });
 
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.AttendanceDetail", b =>
                 {
@@ -76,6 +162,47 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.HasKey("AttendanceHeaderId");
 
                     b.ToTable("AttendanceHeader");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Discussion", b =>
+                {
+                    b.Property<string>("DisscusionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DiscussionDisscusionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DissusionDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GradeSubjectGradeNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeSubjectSubjectTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LessonId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DisscusionId");
+
+                    b.HasIndex("DiscussionDisscusionId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle");
+
+                    b.ToTable("Discussions");
                 });
 
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Event", b =>
@@ -182,6 +309,75 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.ToTable("Lessons");
                 });
 
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.LessonQuestion", b =>
+                {
+                    b.Property<string>("LessonQuestionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("GradeSubjectGradeNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeSubjectSubjectTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LessonId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Response")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LessonQuestionId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle");
+
+                    b.ToTable("LessonQuestions");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Note", b =>
+                {
+                    b.Property<string>("NoteId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("GradeSubjectGradeNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeSubjectSubjectTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LessonId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("NoteContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NoteId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle");
+
+                    b.ToTable("Notes");
+                });
+
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Notification", b =>
                 {
                     b.Property<string>("Id")
@@ -233,6 +429,32 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Term", b =>
+                {
+                    b.Property<string>("SessionName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TermNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TermEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TermName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TermStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TermStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("SessionName", "TermNumber");
+
+                    b.ToTable("Terms");
+                });
+
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Topic", b =>
                 {
                     b.Property<string>("TopicId")
@@ -249,7 +471,11 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Term")
+                    b.Property<string>("TermSessionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TermTermNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("TopicName")
@@ -259,6 +485,8 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.HasKey("TopicId");
 
                     b.HasIndex("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle");
+
+                    b.HasIndex("TermSessionName", "TermTermNumber");
 
                     b.ToTable("Topics");
                 });
@@ -295,6 +523,44 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.ToTable("Webinars");
                 });
 
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Assessment", b =>
+                {
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", "GradeSubject")
+                        .WithMany()
+                        .HasForeignKey("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeSubject");
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Assignment", b =>
+                {
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", "GradeSubject")
+                        .WithMany()
+                        .HasForeignKey("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeSubject");
+
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.AttendanceDetail", b =>
                 {
                     b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.AttendanceHeader", "AttendanceHeader")
@@ -304,6 +570,29 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                         .IsRequired();
 
                     b.Navigation("AttendanceHeader");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Discussion", b =>
+                {
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Discussion", null)
+                        .WithMany("DiscussionReplies")
+                        .HasForeignKey("DiscussionDisscusionId");
+
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", "GradeSubject")
+                        .WithMany("Discussions")
+                        .HasForeignKey("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeSubject");
+
+                    b.Navigation("Lesson");
                 });
 
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Event", b =>
@@ -347,6 +636,55 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.Navigation("Topic");
                 });
 
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.LessonQuestion", b =>
+                {
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", "GradeSubject")
+                        .WithMany()
+                        .HasForeignKey("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeSubject");
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Note", b =>
+                {
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", "GradeSubject")
+                        .WithMany()
+                        .HasForeignKey("GradeSubjectGradeNumber", "GradeSubjectSubjectTitle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GradeSubject");
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Term", b =>
+                {
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Session", "Session")
+                        .WithMany()
+                        .HasForeignKey("SessionName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Session");
+                });
+
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Topic", b =>
                 {
                     b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", "GradeSubject")
@@ -355,7 +693,15 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Term", "Term")
+                        .WithMany("Topics")
+                        .HasForeignKey("TermSessionName", "TermTermNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("GradeSubject");
+
+                    b.Navigation("Term");
                 });
 
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Webinar", b =>
@@ -374,7 +720,19 @@ namespace SchoolManagementSystemAPI.Services.General.Migrations
                     b.Navigation("AttendanceDetails");
                 });
 
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Discussion", b =>
+                {
+                    b.Navigation("DiscussionReplies");
+                });
+
             modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.GradeSubject", b =>
+                {
+                    b.Navigation("Discussions");
+
+                    b.Navigation("Topics");
+                });
+
+            modelBuilder.Entity("SchoolManagementSystemAPI.Services.General.Repositories.Schema.Term", b =>
                 {
                     b.Navigation("Topics");
                 });

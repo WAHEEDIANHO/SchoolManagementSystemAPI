@@ -5,5 +5,7 @@
         public DateTime SessionStartDate { get; set; }
         public DateTime SessionEndDate { get; set; }
         public string SessionName { get; set; }
+
+        public IEnumerable<TermDto> Terms { get; set; }
     }
 }

@@ -24,9 +24,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     // Step 2: Configure CORS policy to allow all origins, headers, and methods
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowAll", build =>
     {
-        builder.AllowAnyOrigin()
+        build.AllowAnyOrigin()
                .AllowAnyMethod()
                .AllowAnyHeader();
     });

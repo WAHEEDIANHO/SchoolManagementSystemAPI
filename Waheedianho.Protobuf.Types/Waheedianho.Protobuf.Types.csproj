@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageId>Waheedianho.Protobuf.Types</PackageId>
+        <Version>1.0.1</Version>
+        <Author>Waheed</Author>
+        <Product>Protobuf</Product>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Protobuf Include="Protos\*.proto"  />
+        <Content Include="Protos\*.proto" Pack="true" Visible="false" />
+        <Protobuf Include="Protos\internal\query.proto">
+          <GrpcServices>Both</GrpcServices>
+          <Access>Public</Access>
+          <ProtoCompile>True</ProtoCompile>
+          <CompileOutputs>True</CompileOutputs>
+          <OutputDir>obj\Debug\net7.0\</OutputDir>
+          <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Grpc.AspnetCore" Version="2.62.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.62.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

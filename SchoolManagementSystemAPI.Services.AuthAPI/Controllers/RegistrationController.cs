@@ -14,7 +14,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
 {
    // [Authorize(Roles = "ADMIN")]
     [ApiController]
-    [Route("api/user")]
+    [Route("/[action]")]
     public sealed class RegistrationController : ControllerBase
     {
         private readonly IAuthService<RegisterRequestDTO> _service;
@@ -31,20 +31,26 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             _idempotencyServices = idenpotencyServices;
         }
 
-        [Authorize(Roles = "ADMIN")]
+        // [Authorize(Roles = "ADMIN")]
         [HttpGet]
-        public ActionResult<IEnumerable<ResponseDTO>> GetAllUsers()
+public ActionResult<IEnumerable<ResponseDTO>> GetAllUsers([FromQuery] Dictionary<string, string>? filter)
+{
+    try
+    {
+        if (filter == null || !filter.Any())
         {
-            try
-            {
-                _response.Result = _service.GetAllUsers();
-                return Ok(_response);
-            }
-            catch (Exception ex) { return StatusCode(500, ex.Message); }
+            _response.Result = _service.GetAllUsers();
         }
-
+        else
+        {
+            _response.Result = _service.GetAllUsers(filter);
+        }
+        return Ok(_response);
+    }
+    catch (Exception ex) { return StatusCode(500, ex.Message); }
+}
         [Authorize(Roles = "ADMIN,TEACHER")]
-        [HttpGet("by-role")]
+        [HttpGet]
         public ActionResult<IEnumerable<ResponseDTO>> GetUsersByRole([FromQuery] string role)
         {
             try
@@ -86,7 +92,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
         }
 
         [Authorize(Roles = "ADMIN")]
-        [HttpPost("create-role")]
+        [HttpPost]
         public async Task<ActionResult<ResponseDTO>> CreateRole([FromQuery] string role)
         {
             try
@@ -152,7 +158,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
         }
 
 
-        [HttpPost("register/teacher")]
+        [HttpPost]
         public async Task<ActionResult<ResponseDTO>> TeacherRegistration([FromHeader(Name = "X-Idempotency-Key")] string requestId, [FromForm] TeacherRegisterDTO registerRequest)
         {
             Console.WriteLine("-------> Entering Teacher reg");
@@ -201,7 +207,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
             }
         }
 
-        [HttpPost("register/student")]
+        [HttpPost]
         public async Task<ActionResult<ResponseDTO>> StudentRegistration([FromHeader(Name = "X-Idempotency-Key")] string requestId, [FromForm] StudentRegisterDTO registerRequest)
         {
             registerRequest.Role = "STUDENT";
@@ -250,7 +256,7 @@ namespace SchoolManagementSystemAPI.Services.AuthAPI.Controllers
         }
 
 
-        [HttpPost("register/parent")]
+        [HttpPost]
         public async Task<ActionResult<ResponseDTO>> ParentRegistration([FromHeader(Name = "X-Idempotency-Key")] string requestId, [FromForm] ParentRegistrationDTO registerRequest)
         {
             registerRequest.Role = "PARENT";

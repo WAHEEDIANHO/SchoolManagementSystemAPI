@@ -21,16 +21,16 @@ namespace SchoolManagementSystemAPI.Services.General.Services
 
         }
 
-        public async Task<bool> CreateGradeAttendanceSheet(AttendanceHeaderReqDTO attendanceSheet)
+        public async Task<bool> CreateGradeAttendanceSheet(CreateAttendanceSheet createAttendanceSheet)
         {
-           AttendanceHeader attendanceHeader = _mapper.Map<AttendanceHeader>(attendanceSheet);
+           AttendanceHeader attendanceHeader = _mapper.Map<AttendanceHeader>(createAttendanceSheet);
             await _headerRepo.Add(attendanceHeader);
             return true;
         }
 
-        public async Task<IEnumerable<AttendanceHeaderDTO>> GetAttendanceSheet()
+        public async Task<IEnumerable<AttendanceHeaderDTO>> GetAttendanceSheet(Dictionary<string, string>? queries = null)
         {
-            var attendances = await _headerRepo.GetAll();
+            var attendances = await _headerRepo.GetAll(queries);
             return _mapper.Map<IEnumerable<AttendanceHeaderDTO>>(attendances);
         }
         public async Task<IEnumerable<AttendanceDetailDTO>> GetStudentAttendant(string attendanceSheetId, string userId)

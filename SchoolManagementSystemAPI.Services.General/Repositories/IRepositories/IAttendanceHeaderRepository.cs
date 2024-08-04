@@ -7,6 +7,6 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.IRepositories
 {
     public interface IAttendanceHeaderRepository: IGenericRepository<AttendanceHeader, AppDbContext>
     {
-        Task<AttendanceHeader> GetSpecifyAttendanceSheet(AttendanceHeaderReqDTO attendanceHeaderReq);
+        Task<AttendanceHeader> GetSpecifyAttendanceSheet(CreateAttendanceSheet createAttendanceHeaderReq);
     }
 }

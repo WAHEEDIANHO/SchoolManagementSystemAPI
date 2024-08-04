@@ -5,7 +5,7 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 
 namespace SchoolManagementSystemAPI.Services.General.Controllers;
 
-[Route("event")]
+[Route("[controller]/[action]")]
 [ApiController]
 public class EventController: ControllerBase
 {
@@ -19,7 +19,7 @@ public class EventController: ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<ResponseDTO>> GetAll()
+    public async Task<ActionResult<ResponseDTO>> GetAllEvent()
     {
         try
         {
@@ -33,7 +33,7 @@ public class EventController: ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<ResponseDTO>> Create([FromBody] EventReqDTO eventReq)
+    public async Task<ActionResult<ResponseDTO>> CreateEvent([FromBody] EventReqDTO eventReq)
     {
         try
         {
@@ -49,7 +49,7 @@ public class EventController: ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<ResponseDTO>> GetById(string id)
+    public async Task<ActionResult<ResponseDTO>> GetEventById(string id)
     {
         try
         {
@@ -64,7 +64,7 @@ public class EventController: ControllerBase
     }
 
     [HttpDelete("id")]
-    public async Task<ActionResult<ResponseDTO>> DeleteById(string id)
+    public async Task<ActionResult<ResponseDTO>> DeleteEventById(string id)
     {
         try
         {

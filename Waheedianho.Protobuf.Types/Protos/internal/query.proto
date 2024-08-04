@@ -1,0 +1,8 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Waheedianho.Protobuf.Types";
+package waheedianho.protobuf.types;
+
+message Query {
+  map<string, string> query = 1;
+}

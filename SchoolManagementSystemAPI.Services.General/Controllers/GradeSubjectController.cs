@@ -6,13 +6,13 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 namespace SchoolManagementSystemAPI.Services.General.Controllers
 {
     [ApiController]
-    [Route("class-subject")]
-    public class ClassSubjectController : ControllerBase
+    [Route("[controller]/[action]")]
+    public class GradeSubjectController : ControllerBase
     {
         private readonly IClassSubjectService _service;
         private readonly ResponseDTO _resp;
 
-        public ClassSubjectController(IClassSubjectService service)
+        public GradeSubjectController(IClassSubjectService service)
         {
             _service = service;
             _resp = new ResponseDTO();

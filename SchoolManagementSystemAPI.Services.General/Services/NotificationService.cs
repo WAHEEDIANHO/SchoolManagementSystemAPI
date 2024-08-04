@@ -23,9 +23,9 @@ namespace SchoolManagementSystemAPI.Services.General.Services
             return true;
         }
 
-        public async Task<IEnumerable<NotificationRespDTO>> GetAllNotifications()
+        public async Task<IEnumerable<NotificationRespDTO>> GetAllNotifications(Dictionary<string, string>? filter = null)
         {
-            var res = await _repository.GetAll();
+            var res = await _repository.GetAll(filter);
             return _mapper.Map<IEnumerable<NotificationRespDTO>>(res);
         }
 

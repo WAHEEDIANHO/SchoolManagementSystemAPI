@@ -1,4 +1,4 @@
-﻿{
+{
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/user/",
@@ -168,7 +168,8 @@
         }
       ],
       "UpstreamPathTemplate": "/api/student/webinar",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "webinar"
     },
     {
       "DownstreamPathTemplate": "/api/student/webinar/today",
@@ -188,5 +189,15 @@
     "Cors": {
       "AllowAll": true
     }
-  }
+  },
+  "SwaggerEndPoints": [
+    {
+      "Key": "webinar",
+      "Config": {
+        "Name": "Webinar",
+        "Version": "v1",
+        "Url": "https://localhost:8003/swagger/v1/swagger.json"
+      }
+    }
+  ]
 }

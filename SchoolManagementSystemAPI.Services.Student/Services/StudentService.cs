@@ -108,7 +108,11 @@ namespace SchoolManagementSystemAPI.Services.Student.Services
                 StudentSchema st = await _repo.GetById(id);
                 if (st != null)
                 {
-                    UserResponseDTO userDet = _grpcApplication.GetStudentById(id); //await _userService.getUserById(id.ToString());
+                    UserResponseDTO userDet =  _grpcApplication.GetStudentById(id); //await _userService.getUserById(id.ToString());
+                    if (userDet == null)
+                    {
+                        return new StudentDTO(st);
+                    }
                     StudentDTO res = new StudentDTO(userDet, st);
                     return res;
                 }

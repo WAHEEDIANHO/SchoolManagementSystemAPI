@@ -1,7 +1,6 @@
 ﻿using SchoolManagementSystemAPI.Services.Teacher.Model.DTOs;
-using SchoolManagementSystemAPI.Services.TeacherAPI;
 
-namespace SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService
+namespace SchoolManagementSystemAPI.Services.Teacher.Utils.GrpcService.IGrpcService
 {
     public interface IGrpcApplicationUserClientService
     {

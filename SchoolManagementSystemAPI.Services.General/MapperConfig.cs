@@ -17,13 +17,13 @@ namespace SchoolManagementSystemAPI.Services.General
                 config.CreateMap<Grade, GradeDTO>().ReverseMap();
                 config.CreateMap<Session, SessionDTO>().ReverseMap();
                 config.CreateMap<GradeSubject, ClassSubjectDTO>().ReverseMap();
-                config.CreateMap<AttendanceHeader, AttendanceHeaderReqDTO>().ReverseMap();
+                config.CreateMap<AttendanceHeader, CreateAttendanceSheet>().ReverseMap();
                 config.CreateMap<AttendanceHeader, AttendanceHeaderDTO>().ReverseMap();
                 config.CreateMap<AttendanceDetail, AttendanceDetailReqDTO>().ReverseMap();
                 config.CreateMap<AttendanceDetail, AttendanceDetailDTO>().ReverseMap();
-                config.CreateMap<AttendanceHeaderReqDTO, AttendanceHeaderReq>().ReverseMap();
+                config.CreateMap<CreateAttendanceSheet, AttendanceHeaderReq>().ReverseMap();
                 config.CreateMap<AttendanceHeaderGrpc, AttendanceHeaderDTO>().ReverseMap();
-                config.CreateMap<AttendanceHeaderReqDTO, AttendanceHeaderReq>().ReverseMap();
+                config.CreateMap<CreateAttendanceSheet, AttendanceHeaderReq>().ReverseMap();
                 config.CreateMap<AttendanceDetailGrpc, AttendanceDetailDTO>().ReverseMap();
                 config.CreateMap<AttendanceDetailReq, AttendanceDetailReqDTO>().ReverseMap();
                 config.CreateMap<GradeDTO, GradeDataGrpc>().ReverseMap();
@@ -40,7 +40,9 @@ namespace SchoolManagementSystemAPI.Services.General
                 config.CreateMap<Lesson, LessonReqDTO>().ReverseMap();
                 config.CreateMap<Topic, TopicReqDTO>()
                     .ForMember(dest => dest.GradeNumber, u => u.MapFrom(src => src.GradeSubjectGradeNumber))
-                    .ForMember(dest => dest.SubjectTitle, u => u.MapFrom(src => src.GradeSubjectSubjectTitle)).ReverseMap();
+                    .ForMember(dest => dest.SubjectTitle, u => u.MapFrom(src => src.GradeSubjectSubjectTitle))
+                    .ForMember(dest => dest.TermNumber, u => u.MapFrom(src => src.TermTermNumber))
+                    .ForMember(dest => dest.SessionName, u => u.MapFrom(src => src.TermSessionName)).ReverseMap();
                 config.CreateMap<Topic, TopicDTO>()
                     .ForMember(dest => dest.GradeNumber, u => u.MapFrom(src => src.GradeSubjectGradeNumber))
                     .ForMember(dest => dest.SubjectTitle, u => u.MapFrom(src => src.GradeSubjectSubjectTitle)).ReverseMap();
@@ -58,6 +60,19 @@ namespace SchoolManagementSystemAPI.Services.General
                     .ForMember(dest => dest.GradeSubjectGradeNumber, u => u.MapFrom(src => src.GradeNumber))
                     .ForMember(dest => dest.GradeSubjectSubjectTitle, u => u.MapFrom(src => src.SubjectTitle))
                     .ReverseMap();
+                config.CreateMap<AssessmentGrpc, Assessment>() //<src, dest>
+                    .ForMember(dest => dest.DateSchedule, u => u.MapFrom(src => DateTime.Parse(src.DateSchedule)))
+                    .ReverseMap();
+                config.CreateMap<AssessmentDtoGrpc, Assessment>()
+                    .ForMember(dest => dest.DateSchedule, u => u.MapFrom(src => DateTime.Parse(src.DateSchedule)))
+                    .ReverseMap();
+                config.CreateMap<TermDto, Term>().ReverseMap();
+                config.CreateMap<NoteDto, Note>().ReverseMap();
+                config.CreateMap<NoteResDto, Note>().ReverseMap();
+                config.CreateMap<Discussion, DiscussionReqDto>().ReverseMap();
+                config.CreateMap<DiscussionDtoGrpc, DiscussionReqDto>()
+                .ForMember(dest => dest.DissusionDateTime, u => u.MapFrom(src => DateTime.Parse(src.DiscussionDateTime))).ReverseMap();;
+                // .ForMember(dest => dest.TermStartDate, u => u.MapFrom(src => DateTime.Parse(src.TermStartDate)))
             });
 
             return mappingConfiguration;

@@ -6,7 +6,7 @@ using SchoolManagementSystemAPI.Services.General.Services.IService;
 namespace SchoolManagementSystemAPI.Services.General.Model
 {
     [ApiController]
-    [Route("/api/session")]
+    [Route("[controller]/[action]")]
     public class SessionController : ControllerBase
     {
         private readonly ISessionService _service;
@@ -19,7 +19,7 @@ namespace SchoolManagementSystemAPI.Services.General.Model
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> GetAll()
+        public async Task<ActionResult<ResponseDTO>> GetAllAcademicSession()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace SchoolManagementSystemAPI.Services.General.Model
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> Create([FromBody] SessionDTO schSessionDTO)
+        public async Task<ActionResult<ResponseDTO>> CreateAcademicSession([FromBody] SessionDTO schSessionDTO)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace SchoolManagementSystemAPI.Services.General.Model
         }
 
         [HttpGet("getById")]
-        public async Task<ActionResult<ResponseDTO>> GetById([FromQuery] string id)
+        public async Task<ActionResult<ResponseDTO>> GetAcademicSessionById([FromQuery] string id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace SchoolManagementSystemAPI.Services.General.Model
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ResponseDTO>> DeleteById([FromQuery] string id)
+        public async Task<ActionResult<ResponseDTO>> DeleteAcademicSession([FromQuery] string id)
         {
             try
             {

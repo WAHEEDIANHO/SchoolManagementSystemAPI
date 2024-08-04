@@ -11,7 +11,6 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Schema
         public string Title { get; set; } = string.Empty;
         [Required]
         public string Objectives { get; set; } = string.Empty;
-        [Required]
         public string Transcript { get; set; } = string.Empty;
         [Required]
         public string MediaUrl { get; set; } = string.Empty;
@@ -22,5 +21,6 @@ namespace SchoolManagementSystemAPI.Services.General.Repositories.Schema
         
         [ForeignKey("TopicId")]
         public Topic Topic { get; set; }
+        // public ICollection<Discussion>? Discussions { get; set; }
     }
 }

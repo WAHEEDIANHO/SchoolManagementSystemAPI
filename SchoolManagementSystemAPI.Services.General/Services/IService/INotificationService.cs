@@ -4,7 +4,7 @@ namespace SchoolManagementSystemAPI.Services.General.Services.IService
 {
     public interface INotificationService
     {
-        Task<IEnumerable<NotificationRespDTO>> GetAllNotifications();
+        Task<IEnumerable<NotificationRespDTO>> GetAllNotifications(Dictionary<string, string>? filter = null);
         Task<NotificationRespDTO> GetNotification(string id);
         Task<bool> RemoveNotification(string id);
         Task<bool> CreateNotification(NotificationDTO schSession);

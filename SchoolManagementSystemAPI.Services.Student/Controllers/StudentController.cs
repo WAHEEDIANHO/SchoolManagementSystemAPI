@@ -9,7 +9,7 @@ using SchoolManagementSystemAPI.Services.Student.Utils.GrpcService.IGrpcClientSe
 namespace SchoolManagementSystemAPI.Services.Student.Controllers
 {
     [ApiController]
-    [Route("api/student")]
+    [Route("[action]")]
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _service;
@@ -58,7 +58,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<ResponseDTO>> StudentById(string id)
         {
@@ -97,7 +97,7 @@ namespace SchoolManagementSystemAPI.Services.Student.Controllers
         }
 
         [Authorize(Roles = $"{UserRoles.TEACHER}, {UserRoles.STUDENT}")]
-        [HttpGet("subject")]
+        [HttpGet]
         public async Task<ActionResult<ResponseDTO>> GetGradeSubject([FromQuery]int GradeNumber)
         {
             try
